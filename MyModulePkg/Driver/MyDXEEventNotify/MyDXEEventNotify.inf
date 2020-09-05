@@ -1,0 +1,29 @@
+##
+#
+#  This is a sample UEFI DXE driver to demonstrate Event Notify.
+#
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = MyDXEEventNotify
+  FILE_GUID                      = 22639636-225C-45F2-8671-9397494EDF46
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = MyDXEEventNotifyEntryPoint
+
+[Sources]
+  MyDXEEventNotify.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+
+[LibraryClasses]
+  UefiDriverEntryPoint
+  DebugLib
+
+[Guids]
+  gEfiEventReadyToBootGuid
+
+[Depex]
+  TRUE

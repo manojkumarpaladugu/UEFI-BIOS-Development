@@ -1,0 +1,27 @@
+## @file
+#  Sample UEFI PEI driver Reference EDKII Module.
+#
+#  This is a sample UEFI PEI driver
+#
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = MyPEIM
+  FILE_GUID                      = D2BF2A8A-ABC1-4459-B7AE-7C3CB9D6273D
+  MODULE_TYPE                    = PEIM
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = MyPEIMEntryPoint
+
+[Sources]
+  MyPEIM.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+
+[LibraryClasses]
+  PeimEntryPoint
+  DebugLib
+
+[Depex]
+  TRUE

@@ -1,0 +1,31 @@
+## @file
+#
+#  This is a sample UEFI PEI driver to install a PPI.
+#
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = MyPEIM1
+  FILE_GUID                      = 07D73512-4796-4A34-9089-8CD03F2BC055
+  MODULE_TYPE                    = PEIM
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = MyPEIM1EntryPoint
+
+[Sources]
+  MyPEIM1.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MyModulePkg/MyModulePkg.dec
+
+[LibraryClasses]
+  PeimEntryPoint
+  PeiServicesLib
+  DebugLib
+
+[Ppis]
+  MyPEIM1PpiGuid        # CONSUMES
+
+[Depex]
+  TRUE

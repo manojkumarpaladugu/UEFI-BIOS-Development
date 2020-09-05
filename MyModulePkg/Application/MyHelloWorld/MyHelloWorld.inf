@@ -1,0 +1,26 @@
+## @file
+#  Sample UEFI Application Reference EDKII Module.
+#
+#  This is a sample shell application that will print some message to the
+#  UEFI Console.
+#
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = MyHelloWorld
+  FILE_GUID                      = 23A8459C-7E50-4B2B-B251-338B7D9CC2EC
+  MODULE_TYPE                    = UEFI_APPLICATION
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = MyHelloWorldMain
+
+[Sources]
+  MyHelloWorld.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+
+[LibraryClasses]
+  UefiApplicationEntryPoint
+  UefiLib

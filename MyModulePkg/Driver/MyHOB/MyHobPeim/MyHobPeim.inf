@@ -1,0 +1,27 @@
+## @file
+#
+#  This is a sample UEFI PEI driver to create HOB.
+#
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = MyHobPeim
+  FILE_GUID                      = BD8DA698-CF7E-4634-9763-6EE3E6CF88FA
+  MODULE_TYPE                    = PEIM
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = MyHobPeimEntryPoint
+
+[Sources]
+  MyHobPeim.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MyModulePkg/MyModulePkg.dec
+
+[LibraryClasses]
+  PeimEntryPoint
+  DebugLib
+
+[Depex]
+  TRUE

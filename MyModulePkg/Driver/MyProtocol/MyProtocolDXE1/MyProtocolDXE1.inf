@@ -1,0 +1,31 @@
+##
+#
+#	This is a DXE driver to demonstrate DXE install protocol interface
+#
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = MyProtocolDXE1
+  FILE_GUID                      = E6872554-50DE-4225-9CFE-0803F88D7A4D
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = MyProtocolDXE1EntryPoint
+
+[Sources]
+  MyProtocolDXE1.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MyModulePkg/MyModulePkg.dec
+
+[LibraryClasses]
+  UefiDriverEntryPoint
+  MemoryAllocationLib
+  DebugLib
+
+[Protocols]
+  gMyProtocolGuid
+
+[Depex]
+  TRUE

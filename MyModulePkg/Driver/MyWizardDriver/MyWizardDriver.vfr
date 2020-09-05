@@ -1,0 +1,38 @@
+//// @file
+//
+// TODO: Brief Description of UEFI Driver MyWizardDriver
+//  
+// TODO: Detailed Description of UEFI Driver MyWizardDriver
+//
+// TODO: Copyright for UEFI Driver MyWizardDriver
+//  
+// TODO: License for UEFI Driver MyWizardDriver
+//
+////
+
+#include "MyWizardDriverNVDataStruc.h"
+
+formset
+  guid      = MYWIZARDDRIVER_FORMSET_GUID,
+  title     = STRING_TOKEN(STR_SAMPLE_FORM_SET_TITLE),
+  help      = STRING_TOKEN(STR_SAMPLE_FORM_SET_HELP),
+  classguid = gEfiIfrFrontPageGuid,
+
+  //
+  // Define a Buffer Storage (EFI_IFR_VARSTORE)
+  //
+  varstore MYWIZARDDRIVER_CONFIGURATION,  // This is the data structure type
+  //varid = CONFIGURATION_VARSTORE_ID,      // Optional VarStore ID
+  name  = MWD_IfrNVData,                  // Define referenced name in vfr
+  guid  = MYWIZARDDRIVER_FORMSET_GUID;    // GUID of this buffer storage
+
+  form 
+    formid = 1,
+    title  = STRING_TOKEN(STR_SAMPLE_FORM1_TITLE);
+      subtitle text = STRING_TOKEN(STR_SUBTITLE_TEXT1);
+      
+      subtitle text = STRING_TOKEN(STR_SUBTITLE_TEXT2);
+
+  endform;
+
+endformset;

@@ -1,0 +1,33 @@
+##
+#
+#  This is a simple DXE SMM driver to register SMI handler.
+#
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = MyDXESMM
+  FILE_GUID                      = 958F12DF-1375-47DD-9831-1173F4E0853B
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = MyDXESMMEntryPoint
+
+[Sources]
+  MyDXESMM.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MyModulePkg/MyModulePkg.dec
+
+[LibraryClasses]
+  UefiDriverEntryPoint
+  DebugLib
+
+[Protocols]
+  gEfiSmmSwDispatch2ProtocolGuid
+  gEfiSmmBase2ProtocolGuid
+
+[Depex]
+  gEfiSmmSwDispatch2ProtocolGuid
+  AND
+  gEfiSmmBase2ProtocolGuid

@@ -1,0 +1,28 @@
+#
+#
+# This is a simple UEFI driver to find total PCI controllers.
+#
+#
+
+[Defines]
+  INF_VERSION                     = 0x00010005
+  BASE_NAME                       = CountPCIControllers
+  FILE_GUID                       = 36CBE3B0-9921-4962-803B-83FCF9F20684
+  MODULE_TYPE                     = UEFI_APPLICATION
+  VERSION_STRING                  = 1.0
+  ENTRY_POINT                     = CountPCIControllersEntryPoint
+
+[Sources]
+  CountPCIControllers.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+
+[LibraryClasses]
+  UefiApplicationEntryPoint
+  UefiLib
+  DebugLib
+  MemoryAllocationLib
+
+[Protocols]
+  gEfiPciRootBridgeIoProtocolGuid  # CONSUMES

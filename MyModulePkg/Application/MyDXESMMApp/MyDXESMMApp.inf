@@ -1,0 +1,24 @@
+##
+#
+#  This is a simple DXE SMM driver to generate SMI.
+#
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = MyDXESMMApp
+  FILE_GUID                      = 0CA8B52B-B37B-4640-A6DA-FBD1525F770A
+  MODULE_TYPE                    = UEFI_APPLICATION
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = MyDXESMMAppEntryPoint
+
+[Sources]
+  MyDXESMMApp.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+
+[LibraryClasses]
+  UefiApplicationEntryPoint
+  UefiLib
+  DebugLib

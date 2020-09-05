@@ -1,0 +1,30 @@
+/** @file
+  This is a sample UEFI PEI driver to consume a PPI.
+
+**/
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = MyPEIM2
+  FILE_GUID                      = 78C41667-7533-4486-A2AF-A68988E05101
+  MODULE_TYPE                    = PEIM
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = MyPEIM2EntryPoint
+
+[Sources]
+  MyPEIM2.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MyModulePkg/MyModulePkg.dec
+
+[LibraryClasses]
+  PeimEntryPoint
+  PeiServicesLib
+  DebugLib
+
+[Ppis]
+  MyPEIM1PpiGuid        # CONSUMES
+
+[Depex]
+  MyPEIM1PpiGuid

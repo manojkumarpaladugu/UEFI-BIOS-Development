@@ -1,0 +1,28 @@
+##
+#
+#  This is a bus driver usage
+#  This is a sample UEFI application to enumerate all present PCIe devices.
+#
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = MyPCIeEnumeration
+  FILE_GUID                      = A89C5DC0-8F7C-4C7B-BED6-67E83EEC1D66
+  MODULE_TYPE                    = UEFI_APPLICATION
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = MyPCIeEnumerationEntryPoint
+
+[Sources]
+  MyPCIeEnumeration.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+
+[LibraryClasses]
+  UefiApplicationEntryPoint
+  UefiLib
+  DebugLib
+
+[Protocols]
+  gEfiPciIoProtocolGuid

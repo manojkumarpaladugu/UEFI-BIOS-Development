@@ -1,0 +1,24 @@
+#
+#
+# This is a simple UEFI driver to demonstrate periodic timer event
+#
+#
+
+[Defines]
+  INF_VERSION                             = 0x00010005
+  BASE_NAME                               = PeriodicTimerEvent
+  FILE_GUID                               = 47810779-5F86-4773-86D7-936E1DB8E55A
+  MODULE_TYPE                             = UEFI_DRIVER
+  VERSION_STRING                          = 1.0
+  ENTRY_POINT                             = PeriodicTimerEventEntryPoint
+
+[Sources]
+  PeriodicTimerEvent.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+
+[LibraryClasses]
+  UefiDriverEntryPoint
+  DebugLib
+  UefiLib

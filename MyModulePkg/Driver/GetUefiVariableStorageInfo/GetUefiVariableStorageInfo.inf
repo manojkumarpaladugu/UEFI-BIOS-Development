@@ -1,0 +1,22 @@
+#
+# This is a simple UEFI driver to get UEFI variable storage info.
+#
+
+[Defines]
+  INF_VERSION                           = 0x00010005
+  BASE_NAME                             = GetUefiVariableStorageInfo
+  FILE_GUID                             = 7E2E92BD-6AC3-4A44-AE94-C72B5FF9A6AA
+  MODULE_TYPE                           = UEFI_DRIVER
+  VERSION_STRING                        = 1.0
+  ENTRY_POINT                           = GetUefiVariableStorageInfoEntryPoint
+
+[Sources]
+  GetUefiVariableStorageInfo.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+
+[LibraryClasses]
+  UefiDriverEntryPoint
+  UefiRuntimeServicesTableLib
+  DebugLib

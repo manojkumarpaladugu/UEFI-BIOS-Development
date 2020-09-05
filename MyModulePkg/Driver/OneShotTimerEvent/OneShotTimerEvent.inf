@@ -1,0 +1,23 @@
+#
+# This example demonstrates CheckEvent()
+#
+
+
+[Defines]
+  INF_VERSION                           = 0x00010005
+  BASE_NAME                             = OneShotTimerEvent
+  FILE_GUID                             = 01A40826-4335-4EA9-A84D-07BC6261849C
+  MODULE_TYPE                           = UEFI_DRIVER
+  VERSION_STRING                        = 1.0
+  ENTRY_POINT                           = OneShotTimerEventEntryPoint
+
+[Sources]
+  OneShotTimerEvent.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+
+[LibraryClasses]
+  UefiDriverEntryPoint
+  DebugLib
+  UefiLib

@@ -1,0 +1,31 @@
+##
+#
+#  This is a DXE driver to demonstrate UEFI driver model.
+#
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = SerialIoUefiDriver
+  FILE_GUID                      = 6CB5E3C6-1F7E-44E6-A7F5-88693FB0D2FE
+  MODULE_TYPE                    = UEFI_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = SerialIoUefiDriverEntryPoint
+
+[Sources]
+  SerialIoUefiDriver.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SerialPortLib
+  DebugLib
+
+[Depex]
+  TRUE
+
+[Protocols]
+  gEfiSerialIoProtocolGuid
+  gEfiDriverBindingProtocolGuid

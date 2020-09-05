@@ -1,0 +1,25 @@
+## @file
+#  This is a sample UEFI DXE driver
+#
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = MyDXE
+  FILE_GUID                      = 0ECA8E32-439B-488F-8AC4-D35E43EA189C
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = MyDXEEntryPoint
+
+[Sources]
+  MyDXE.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+
+[LibraryClasses]
+  UefiDriverEntryPoint
+  DebugLib
+
+[Depex]
+  TRUE

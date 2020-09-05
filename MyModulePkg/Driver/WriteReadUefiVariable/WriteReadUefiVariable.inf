@@ -1,0 +1,26 @@
+#
+# This is a simple UEFI driver to demnonstrate on how to use SetVariable() and GetVariable() services.
+#
+
+[Defines]
+  INF_VERSION                           = 0x00010005
+  BASE_NAME                             = WriteReadUefiVariable
+  FILE_GUID                             = 732512A6-9349-45B8-BCE5-3DD38ABBF87D
+  MODULE_TYPE                           = UEFI_DRIVER
+  VERSION_STRING                        = 1.0
+  ENTRY_POINT                           = WriteReadUefiVariableEntryPoint
+
+[Sources]
+  WriteReadUefiVariable.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MyModulePkg/MyModulePkg.dec
+
+[LibraryClasses]
+  UefiDriverEntryPoint
+  UefiRuntimeServicesTableLib
+  DebugLib
+
+[Protocols]
+  gExampleConfigurationVariableGuid  #CONSUMES

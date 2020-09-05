@@ -1,0 +1,23 @@
+#
+#  This is a simple UEFI application to demonstrate use of wait for event till key press or timer event.
+#
+
+[Defines]
+  INF_VERSION                           = 0x00010005
+  BASE_NAME                             = WaitKeyPressOrTimerEvent
+  FILE_GUID                             = 8D6F39A5-502E-4080-9658-667687CFFA38
+  MODULE_TYPE                           = UEFI_DRIVER
+  VERSION_STRING                        = 1.0
+  ENTRY_POINT                           = WaitKeyPressOrTimerEventEntryPoint
+
+[Sources]
+  WaitKeyPressOrTimerEvent.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+
+[LibraryClasses]
+  UefiDriverEntryPoint
+  DebugLib
+  UefiLib
+  UefiBootServicesTableLib

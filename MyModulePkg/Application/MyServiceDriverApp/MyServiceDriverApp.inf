@@ -1,0 +1,27 @@
+##
+##  This is a sample UEFI application to consume service binding protocol
+##
+
+[Defines]
+  INF_VERSION                     = 0x00010005
+  BASE_NAME                       = MyServiceDriverApp
+  FILE_GUID                       = 5C76D02F-0A47-442F-A099-3D3A1698B285
+  MODULE_TYPE                     = UEFI_APPLICATION
+  VERSION_STRING                  = 1.0
+  ENTRY_POINT                     = MyServiceDriverAppEntryPoint
+
+[Sources]
+  MyServiceDriverApp.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  MyModulePkg/MyModulePkg.dec
+
+[LibraryClasses]
+  UefiApplicationEntryPoint
+  UefiLib
+
+[Protocols]
+  gEfiAbcProtocolGuid                ## CONSUMES
+  gEfiAbcServiceBindingProtocolGuid  ## CONSUMES

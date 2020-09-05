@@ -1,0 +1,29 @@
+##
+##
+##  This is a UEFI driver to demonstrate UEFI Service Binding Protocol.
+##
+##
+
+[Defines]
+  INF_VERSION                     = 0x00010005
+  BASE_NAME                       = MyServiceDriver
+  FILE_GUID                       = 74AF3101-3B7C-42F8-8D97-4A6B8EE731F4
+  MODULE_TYPE                     = UEFI_DRIVER
+  VERSION_STRING                  = 1.0
+  ENTRY_POINT                     = MyServiceDriverEntryPoint
+
+[Sources]
+  Driver.h
+  Driver.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MyModulePkg/MyModulePkg.dec
+  
+[LibraryClasses]
+  UefiDriverEntryPoint
+  DebugLib
+
+[Protocols]
+  gEfiAbcProtocolGuid                ## PRODUCES
+  gEfiAbcServiceBindingProtocolGuid  ## PRODUCES

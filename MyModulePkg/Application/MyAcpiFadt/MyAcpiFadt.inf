@@ -1,0 +1,28 @@
+##
+#
+#  This is a sample UEFI application to print FADT contents.
+#
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = MyAcpiFadt
+  FILE_GUID                      = F55F5C30-19D5-4112-9221-6E2671CF5206
+  MODULE_TYPE                    = UEFI_APPLICATION
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = MyAcpiFadtEntryPoint
+
+[Sources]
+  MyAcpiFadt.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+
+[LibraryClasses]
+  UefiApplicationEntryPoint
+  UefiLib
+  DebugLib
+  BaseMemoryLib
+
+[Guids]
+  gEfiAcpi20TableGuid

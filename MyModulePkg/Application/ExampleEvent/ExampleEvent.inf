@@ -1,0 +1,28 @@
+#
+#
+# This is a sample UEFI application to demonstrate Events.
+#
+#
+
+[Defines]
+  INF_VERSION                           = 0x00010005
+  BASE_NAME                             = ExampleEvent
+  FILE_GUID                             = 941FC6BE-0C2A-4E8F-A6AD-0B95A682EE98
+  MODULE_TYPE                           = UEFI_APPLICATION
+  VERSION_STRING                        = 1.0
+  ENTRY_POINT                           = ExampleEventEntryPoint
+
+[Sources]
+  ExampleEvent.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MyModulePkg/MyModulePkg.dec
+
+[LibraryClasses]
+  UefiApplicationEntryPoint
+  DebugLib
+  UefiLib
+
+[Protocols]
+  gExampleEventGroupGuid  #CONSUMES

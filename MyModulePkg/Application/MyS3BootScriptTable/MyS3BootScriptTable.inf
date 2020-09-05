@@ -1,0 +1,24 @@
+##
+#
+#  This is a simple UEFI application for accessing S3 boot script table.
+#
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = MyS3BootScriptTable
+  FILE_GUID                      = D43DDF00-0D5C-49BE-BE30-0546EC115C21
+  MODULE_TYPE                    = UEFI_APPLICATION
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = MyS3BootScriptTableEntryPoint
+
+[Sources]
+  MyS3BootScriptTable.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+
+[LibraryClasses]
+  UefiApplicationEntryPoint
+  UefiLib

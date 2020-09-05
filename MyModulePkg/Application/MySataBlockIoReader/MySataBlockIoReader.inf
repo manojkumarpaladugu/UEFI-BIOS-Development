@@ -1,0 +1,29 @@
+##
+#
+#  This is an example of device driver usage
+#  This is a simple UEFI application to read SATA using Block IO protocol.
+#
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = MySataBlockIoReader
+  FILE_GUID                      = 018DBE72-1E40-4FBB-96CF-A4B9A154C61B
+  MODULE_TYPE                    = UEFI_APPLICATION
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = MySataBlockIoReaderEntryPoint
+
+[Sources]
+  MySataBlockIoReader.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+
+[LibraryClasses]
+  UefiApplicationEntryPoint
+  UefiLib
+  MemoryAllocationLib
+
+[Protocols]
+  gEfiBlockIoProtocolGuid
+  gEfiDevicePathProtocolGuid
