@@ -14,7 +14,7 @@ The normal code flow in platform initialization is in the following order.
 1. Runtime
 1. Afterlife
 
-![](https://i.imgur.com/9bDyREo.png)
+![](https://github.com/manojkumarpaladugu/UEFI-BIOS-Development/blob/master/docs/images/00_bootflow.png)
 
 <br>
 
