@@ -1,3 +1,5 @@
+[Back to Index](../index.md)
+
 **Introduction:**  
 Driver Execution Environment (DXE) is the phase after PEI in UEFI boot flow. The DXE phase is the phase where most of the system initialization is performed. The PEI phase is responsible for initializing permanent memory so that the DXE phase can be loaded and executed. The state of system at the end of PEI phase is passed to DXE in the form of HOBs.
 
@@ -58,3 +60,5 @@ DXE drivers are of two types.
 The early phase DXE drivers depends on presence and contents of a priori file and the evaluation of dependency expression. These early DXE phase drivers contains processor, chipset, and platform initialization code. They also typically include DXE architectural protocols that are required for DXE core to produce EFI System Table, EFI Boot Services, and EFI Runtime Services.
 
 The DXE driver comply with UEFI driver model do not perform any hardware initialization. Instead, they register a Driver Binding Protocol interface in the handle database. The set of Driver Binding Protocols are used by BDS phase to connect the drivers to the devices required to establish consoles and provide access to boot device.
+
+[Back to Index](../index.md)
