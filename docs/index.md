@@ -7,3 +7,13 @@
    * [Phase 2 - Pre EFI Initialization (PEI)](uefi/PeiPhase.md)
    * [Phase 3 - Driver Execution Environment (DXE)](uefi/DxePhase.md)
    * [Phase 4 - Boot Device Selection (BDS)](uefi/BdsPhase.md)
+* [UEFI Service Binding Protocol](uefi/ServiceBindingProtocol.md)
+* [Protocols and Handles](uefi/ProtocolsAndHandles.md)
+* [UEFI Shell](uefi/UefiShell.md)
+
+**EDK2**
+* [EDK2 Build](edk2/Edk2Build.md)
+
+**Technologies**
+* [Advanced Host Controller Interface (AHCI)](technologies/Ahci.md)
+* [Non Volative Memory express(NVMe)](technologies/Nvme.md)
