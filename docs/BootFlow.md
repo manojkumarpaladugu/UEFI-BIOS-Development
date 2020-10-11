@@ -6,6 +6,7 @@ To implement this each PEIM has the ability to change the boot mode using PeiSer
 Change in boot mode doesn’t influence the order of PEIMs dispatched.
 
 <br/>
+
 **Code Flow:**  
 The normal code flow in platform initialization is in the following order.
 1. SEC
