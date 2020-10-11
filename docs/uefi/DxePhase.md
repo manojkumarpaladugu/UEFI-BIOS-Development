@@ -10,8 +10,6 @@ The DXE dispatcher is responsible for discovering and executing DXE drivers in c
 
 These components work together to initialize the platform and provide services required to boot to an OS. The DXE phase is terminated when an OS successfully begins its boot process that is, when the BDS phase starts. Only the runtime services provided by DXE can run into OS.
 
-<br>
-
 **DXE Core:**  
 DXE core is designed to be completely portable with no processor, chipset or platform dependencies.
 
@@ -47,14 +45,10 @@ The DXE core produces EFI System Table, which contains all the information that 
    1. Global Coherency Domain Services
    1. DXE Dispatcher Services
 
-<br>
-
 **DXE Dispatcher:**  
 After the DXE Core is initialized, control is handed to the DXE dispatcher. The DXE dispatcher is responsible for discovering and dispatching DXE drivers found in firmware volumes described by HOB list. As execution continues, DXE dispatcher searches for DXE drivers in other firmware volumes might be located.
 
 Each firmware volumes contain a priori file, used to indicate the order in which DXE drivers are loaded and executed. A firmware file may not have a priori file, then dependency expression is used to load and execute DXE drivers. A priori file provides strongly ordered list of DXE drivers that do not need to use dependency expression. A firmware volume may not provide a priori file, in that case dependency expression is evaluated in order to load execute DXE drivers.
-
-<br>
 
 **DXE Drivers:**  
 DXE drivers are of two types.
