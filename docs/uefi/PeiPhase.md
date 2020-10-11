@@ -1,3 +1,5 @@
+[Back to Index](../index.md)
+
 **Introduction:**  
 The design for PEI is essentially a miniature version of DXE that addresses many of the same issues. This phase consists of following parts.
 1. PEI foundation
@@ -85,3 +87,5 @@ The PEI phase in S3 boot differs from normal boot. The differences are as follow
    1. System memory owned by OS is not used by any PEIM
    1. DXE phase is not dispatched
    1. Instead of dispatching DXE phase, uses a special hardware table to restore fundamental hardware back to boot configuration
+
+[Back to Index](../index.md)
