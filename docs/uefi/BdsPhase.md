@@ -1,3 +1,5 @@
+[Back to Index](../index.md)
+
 **Introduction:**  
 The Boot Device Selection (BDS) Architectural Protocol executes during BDS phase. The BDS Architectural Protocol is discovered in DXE phase, and it is executed when two conditions are met.
 1. All the DXE Architectural Protocols have been registered in the handle database. This condition is required for the DXE core to produce EFI Boot Services and EFI Runtime Services.
@@ -25,3 +27,5 @@ If the BDS phase is failed to connect console devices, load a driver or boot a b
 
 **Boot Services Terminate:**  
 The BDS phase is terminated when OS loader is executed, and OS successfully booted. An OS loader or OS kernel may call single service ExitBootServices() to terminate BDS phase. Here after Runtime phase begins.
+
+[Back to Index](../index.md)
