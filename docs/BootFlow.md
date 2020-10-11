@@ -5,7 +5,6 @@ The PEI foundation is unaware the system boot pat. Only PEIMs know the boot mode
 To implement this each PEIM has the ability to change the boot mode using PeiService SetBootMode().  
 Change in boot mode doesn’t influence the order of PEIMs dispatched.
 
-<br>
 
 **Code Flow:**  
 The normal code flow in platform initialization is in the following order.
@@ -18,12 +17,10 @@ The normal code flow in platform initialization is in the following order.
 
 ![](https://github.com/manojkumarpaladugu/UEFI-BIOS-Development/blob/master/docs/images/00_bootflow.png)
 
-<br>
 
 **Defined Boot modes:**  
 The list of possible boot modes is defined in GetBootMode() function.
 
-<br>
 
 **Priority of Boot Paths:**  
 Within a given PEIM, the priority of the boot mode is from highest to lowest.
@@ -41,7 +38,6 @@ Within a given PEIM, the priority of the boot mode is from highest to lowest.
 
    The boot modes listed above are defined in PEI services SetBootMode().
 
-<br>
 
 **Reset Boot Paths:**  
 1. Intel Itanium Processor Reset:
@@ -52,7 +48,6 @@ Non-power-on reset can occur for many reasons. Some PEI and DXE services reset a
    1. Resetting hardware to complete chipset initialization
    1. Responding to catastrophic failure
 
-<br>
 
 **Normal Boot Path:**  
 1. Basic G0 to S0 and S0 variation boot paths:
@@ -70,7 +65,6 @@ It is similar to S5, platform completely initializes, assumes previous settings 
    1. S5 (Soft off):
 Platform initializes completely, can’t assume previous settings are valid.
 
-<br>
 
 **Recovery Paths:**  
 All the previously described boot paths can be modified or aborted if the system detects the recovery is needed. Recovery is the process of reconstituting a system’s firmware that have been corrupted. Generally, firmware is present in non-volatile memory as blocks. The reasons for firmware corruption could be a errant hardware or software.
