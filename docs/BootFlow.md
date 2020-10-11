@@ -15,7 +15,6 @@ The normal code flow in platform initialization is in the following order.
 1. Afterlife
 
 <img src="https://github.com/manojkumarpaladugu/UEFI-BIOS-Development/blob/master/docs/images/BootFlow.png" width="800" />
-![](https://github.com/manojkumarpaladugu/UEFI-BIOS-Development/blob/master/docs/images/BootFlow.png)
 
 **Defined Boot modes:**  
 The list of possible boot modes is defined in GetBootMode() function.
