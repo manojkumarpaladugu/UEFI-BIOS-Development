@@ -1,4 +1,4 @@
-[Back to Boot Flow](BootFlow.md)
+[Back to Index](../index.md)
 
 **Introduction:**  
 SEC phase is the first phase that occurs in the PI architecture and has responsibilities like managing restart events, creating temporary memory, validating root of trust and finally pass hand off information to PEI phase.
@@ -22,4 +22,4 @@ SEC Platform Information PPI: Handoff information is passed from SEC phase to th
 
 SEC HOB Data PPI: SEC phase HOB data is passed to PEI or DXE consumers using HOBs. If EFI_SEC_HOB_DATA_PPI is in the list of PPIs passed to the PEI entry point, the PEI foundation will call GetHobs() member function and installed all HOBs returned into the HOB list.
 
-[Back to Boot Flow](BootFlow.md)
+[Back to Index](../index.md)
