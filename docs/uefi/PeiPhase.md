@@ -62,7 +62,7 @@ The PEI dispatcher continues traversing through all the firmware volumes until e
 
 Once all PEI dispatcher job is complete, then it invokes DXE Initial Program Load (IPL) PPI.
 
-![](images/PeiPhase.png)
+<img src="images/PeiPhase.png" />
 
 1. Dependency Expression:  
 The sequence of PEIMs to be dispatched is based on dependency expression. The GUIDs of PPIs and GUIDs of file names are referred in the dependency expression.
