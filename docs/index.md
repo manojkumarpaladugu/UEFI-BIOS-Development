@@ -1,4 +1,4 @@
 
 # Index
 
-* [Boot Flow](BootFlow.md)
+* [Boot Flow](uefi/BootFlow.md)
