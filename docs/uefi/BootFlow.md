@@ -1,4 +1,4 @@
-[Back to Home](../index.md)
+[Back to Index](../index.md)
 
 **Introduction:**  
 The PEI foundation is unaware the system boot pat. Only PEIMs know the boot mode and takes appropriate actions based on the boot mode.  
@@ -63,4 +63,4 @@ Platform initializes completely, can’t assume previous settings are valid.
 **Recovery Paths:**  
 All the previously described boot paths can be modified or aborted if the system detects the recovery is needed. Recovery is the process of reconstituting a system’s firmware that have been corrupted. Generally, firmware is present in non-volatile memory as blocks. The reasons for firmware corruption could be a errant hardware or software.
 
-[Back to Home](../index.md)
+[Back to Index](../index.md)
