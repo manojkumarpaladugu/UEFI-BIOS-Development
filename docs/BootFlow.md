@@ -4,8 +4,7 @@
 The PEI foundation is unaware the system boot pat. Only PEIMs know the boot mode and takes appropriate actions based on the boot mode.  
 To implement this each PEIM has the ability to change the boot mode using PeiService SetBootMode().  
 Change in boot mode doesn’t influence the order of PEIMs dispatched.
-
-
+<br>
 **Code Flow:**  
 The normal code flow in platform initialization is in the following order.
 1. SEC
