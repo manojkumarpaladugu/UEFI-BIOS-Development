@@ -4,7 +4,7 @@
 Unified Extensible Firmware Interface:
 The Unified Extensible Firmware Interface (UEFI) is a specification that defines a software interface between an operating system and platform firmware. UEFI replaces the legacy Basic Input/Output System (BIOS) firmware interface originally present in all IBM PC-compatible personal computers, with most UEFI firmware implementations providing support for legacy BIOS services. UEFI can support remote diagnostics and repair of computers, even with no operating system installed.
 
-Features:
+Features:  
 1. Services: Boot Services & Runtime Services
    1.	GOP (Graphics Output Protocol)
    1.	UEFI setup variable services
