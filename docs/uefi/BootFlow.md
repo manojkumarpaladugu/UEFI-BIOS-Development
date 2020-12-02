@@ -4,20 +4,18 @@
 Unified Extensible Firmware Interface:
 The Unified Extensible Firmware Interface (UEFI) is a specification that defines a software interface between an operating system and platform firmware. UEFI replaces the legacy Basic Input/Output System (BIOS) firmware interface originally present in all IBM PC-compatible personal computers, with most UEFI firmware implementations providing support for legacy BIOS services. UEFI can support remote diagnostics and repair of computers, even with no operating system installed.
 
-Features:  
+<img src="images/Uefi.png" />
+
+**Features:**  
 1. Services: Boot Services & Runtime Services
    1.	GOP (Graphics Output Protocol)
    1.	UEFI setup variable services
    1.	Timer services
 1.	Applications: EFI supports UEFI applications that can be run from UEFI shell. OS boot loaders like Grub/Windows Boot Manager are examples of UEFI applications
 1.	EFI system partition: EFI has a FAT32 based partition that stores OS boot loaders to execute them to boot to OS.
-1.	Booting:
+1.	Booting
    1.	Secure boot
    1.	Network boot
-
-The PEI foundation is unaware the system boot pat. Only PEIMs know the boot mode and takes appropriate actions based on the boot mode.  
-To implement this each PEIM has the ability to change the boot mode using PeiService SetBootMode().  
-Change in boot mode doesn’t influence the order of PEIMs dispatched.
 
 **Code Flow:**  
 The normal code flow in platform initialization is in the following order.
@@ -29,6 +27,10 @@ The normal code flow in platform initialization is in the following order.
 1. Afterlife
 
 <img src="images/BootFlow.png" />
+
+The PEI foundation is unaware the system boot pat. Only PEIMs know the boot mode and takes appropriate actions based on the boot mode.  
+To implement this each PEIM has the ability to change the boot mode using PeiService SetBootMode().  
+Change in boot mode doesn’t influence the order of PEIMs dispatched.
 
 **Defined Boot modes:**  
 The list of possible boot modes is defined in GetBootMode() function.
