@@ -1,6 +1,9 @@
 [Back to Index](../index.md)
 
 **Introduction:**  
+Unified Extensible Firmware Interface:
+The Unified Extensible Firmware Interface (UEFI) is a specification that defines a software interface between an operating system and platform firmware. UEFI replaces the legacy Basic Input/Output System (BIOS) firmware interface originally present in all IBM PC-compatible personal computers, with most UEFI firmware implementations providing support for legacy BIOS services. UEFI can support remote diagnostics and repair of computers, even with no operating system installed.
+
 The PEI foundation is unaware the system boot pat. Only PEIMs know the boot mode and takes appropriate actions based on the boot mode.  
 To implement this each PEIM has the ability to change the boot mode using PeiService SetBootMode().  
 Change in boot mode doesn’t influence the order of PEIMs dispatched.
