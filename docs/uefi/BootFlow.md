@@ -16,6 +16,7 @@ The Unified Extensible Firmware Interface (UEFI) is a specification that defines
 1.	Booting
    1.	Secure boot
    1.	Network boot
+   1. Uefi Boot
 
 **Code Flow:**  
 The normal code flow in platform initialization is in the following order.
