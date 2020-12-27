@@ -2,7 +2,7 @@
 **EDK2 Development Setup**
 1) Install Visual Studio 2019
     1) Run Visual Studio installer
-    1) Select 
+    1) Select  
        Workloads->Desktop development with C++
        Individual components->MSVC v142 - VS 2019 C++ x64/x86 Spectre-mitigated libs (latest)
     1) If EDK source code requires old toolset for compilation, then install below component from VS 2019 installer. Otherwise skip this step
@@ -28,11 +28,11 @@
     build -p OvmfPkg/OvmfPkgx64.dsc -D DEBUG_ON_SERIAL_PORT -a X64 -b DEBUG -t VS2019
 	 
 1) Run OVMF on QEMU
-    1) To run OVMF with serial log
+    1) To run OVMF with serial log  
 		"C:\Program Files\qemu\qemu-system-x86_64.exe" -drive file=fat:rw:%WORKSPACE%\temp\,format=raw -debugcon file:..\OvmfPkg_X64_UART.log -global isa-debugcon.iobase=0x402 -net none -bios ..\Build\OvmfX64\DEBUG_VS2019\FV\OVMF.fd
 
-	1) To run OVMF without serial log 
+	1) To run OVMF without serial log  
 		"C:\Program Files\qemu\qemu-system-x86_64.exe" -drive file=fat:rw:%WORKSPACE%\temp\,format=raw -net none -bios ..\Build\OvmfX64\DEBUG_VS2019\FV\OVMF.fd
 
-	1) To run OVMF without virtual drive and serial log
+	1) To run OVMF without virtual drive and serial log  
 		"C:\Program Files\qemu\qemu-system-x86_64.exe" -net none -bios ..\Build\OvmfX64\DEBUG_VS2019\FV\OVMF.fd
