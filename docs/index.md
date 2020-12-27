@@ -12,7 +12,7 @@
 * [UEFI Shell](uefi/UefiShell.md)
 
 **EDK2**
-* [EDK2 Build](edk2/Edk2Build.md)
+* [EDK2 Development Setup](edk2/Edk2DevelopmentSetup.md)
 
 **Technologies**
 * [Advanced Host Controller Interface (AHCI)](technologies/Ahci.md)
