@@ -14,18 +14,18 @@
 	 
 1) Install Python 3.x
 
-1) Clone EDK2 source code from latest stable branch.
-    git clone -b stable/202011 https://github.com/tianocore/edk2.git
-    cd edk2
-    git submodule update --init
+1) Clone EDK2 source code from latest stable branch.  
+    git clone -b stable/202011 https://github.com/tianocore/edk2.git  
+    cd edk2  
+    git submodule update --init  
 
-1) Build source code
-    set WORKSPACE=%cd%
-    set PACKAGES_PATH=%WORKSPACE%\edk2
-    set NASM_PREFIX=C:\NASM
-    cd edk2
-    edksetup.bat Rebuild
-    build -p OvmfPkg/OvmfPkgx64.dsc -D DEBUG_ON_SERIAL_PORT -a X64 -b DEBUG -t VS2019
+1) Build source code  
+    set WORKSPACE=%cd%  
+    set PACKAGES_PATH=%WORKSPACE%\edk2  
+    set NASM_PREFIX=C:\NASM  
+    cd edk2  
+    edksetup.bat Rebuild  
+    build -p OvmfPkg/OvmfPkgx64.dsc -D DEBUG_ON_SERIAL_PORT -a X64 -b DEBUG -t VS2019  
 	 
 1) Run OVMF on QEMU
     1) To run OVMF with serial log  
