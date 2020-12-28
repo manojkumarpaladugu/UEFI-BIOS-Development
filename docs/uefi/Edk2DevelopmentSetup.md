@@ -31,12 +31,12 @@
 	 
 1) Run OVMF on QEMU  
     1) To run OVMF with serial log  
-		"C:\Program Files\qemu\qemu-system-x86_64.exe" -drive file=fat:rw:%WORKSPACE%\temp\,format=raw -debugcon file:..\OvmfPkg_X64_UART.log -global isa-debugcon.iobase=0x402 -net none -bios ..\Build\OvmfX64\DEBUG_VS2019\FV\OVMF.fd
+		"C:\Program Files\qemu\qemu-system-x86_64.exe" -drive file=fat:rw:%WORKSPACE%\temp\,format=raw -debugcon file:%WORKSPACE%\OvmfPkg_X64_UART.log -global isa-debugcon.iobase=0x402 -net none -bios %WORKSPACE%\Build\OvmfX64\DEBUG_VS2019\FV\OVMF.fd
 
 	1) To run OVMF without serial log  
-		"C:\Program Files\qemu\qemu-system-x86_64.exe" -drive file=fat:rw:%WORKSPACE%\temp\,format=raw -net none -bios ..\Build\OvmfX64\DEBUG_VS2019\FV\OVMF.fd
+		"C:\Program Files\qemu\qemu-system-x86_64.exe" -drive file=fat:rw:%WORKSPACE%\temp\,format=raw -net none -bios %WORKSPACE%\Build\OvmfX64\DEBUG_VS2019\FV\OVMF.fd
 
 	1) To run OVMF without virtual drive and serial log  
-		"C:\Program Files\qemu\qemu-system-x86_64.exe" -net none -bios ..\Build\OvmfX64\DEBUG_VS2019\FV\OVMF.fd
+		"C:\Program Files\qemu\qemu-system-x86_64.exe" -net none -bios %WORKSPACE%\Build\OvmfX64\DEBUG_VS2019\FV\OVMF.fd
 
 [Back to Index](../index.md)
