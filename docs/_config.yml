@@ -1,1 +1,6 @@
-theme: jekyll-theme-cayman
+#Jekyll configuration
+name: Manoj Kumar
+description: Chronicles of my adventure in coding
+url: "https://manojkumarpaladugu.github.io"
+markdown: kramdown
+highlighter: rouge
