@@ -1,8 +1,8 @@
 
 [Back to Index](../index.md)
 
-**EDK2 Development Setup**
-1) Install Visual Studio 2019  
+**EDK2 Development Setup**<br />
+1) Install Visual Studio 2019<br />
     1) Run Visual Studio installer
     1) Select  
        Workloads->Desktop development with C++
