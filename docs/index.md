@@ -14,6 +14,9 @@
 **EDK2**
 * [EDK2 Development Setup](uefi/Edk2DevelopmentSetup.md)
 
+**TianoCore**
+* [Training](https://github.com/tianocore-training/Tianocore_Training_Contents/wiki)
+
 **Technologies**
 * [Advanced Host Controller Interface (AHCI)](technologies/Ahci.md)
 * [Non Volative Memory express (NVMe)](technologies/Nvme.md)
