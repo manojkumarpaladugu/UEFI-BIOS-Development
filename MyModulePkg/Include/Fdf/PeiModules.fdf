@@ -1,0 +1,7 @@
+#
+# PEI Drivers
+#
+  INF MyModulePkg/Driver/MyPEIM/MyPEIM.inf
+  INF MyModulePkg/Driver/MyPPI/MyPEIM1/MyPEIM1.inf
+  INF MyModulePkg/Driver/MyPPI/MyPEIM2/MyPEIM2.inf
+  INF MyModulePkg/Driver/MyHOB/MyHobPeim/MyHobPeim.inf

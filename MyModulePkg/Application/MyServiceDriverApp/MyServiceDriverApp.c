@@ -42,7 +42,7 @@ MyServiceDriverAppEntryPoint(
     &HandleBuffer
   );
   if (EFI_ERROR(Status)) {
-    Print(L"ERROR: Find ABC Service Binding: %r\n", Status);
+    DEBUG((DEBUG_ERROR, "ERROR: Find ABC Service Binding: %r\n", Status));
     return Status;
   }
 
@@ -58,13 +58,13 @@ MyServiceDriverAppEntryPoint(
     EFI_OPEN_PROTOCOL_GET_PROTOCOL
   );
   if (EFI_ERROR(Status)) {
-    Print(L"ERROR: Open ABC Service Binding: %r\n", Status);
+    DEBUG((DEBUG_ERROR, "ERROR: Open ABC Service Binding: %r\n", Status));
     return Status;
   }
 
   Status = mAbcServiceBindingProtocol->CreateChild(mAbcServiceBindingProtocol, &ChildHandle);
   if (EFI_ERROR(Status)) {
-    Print(L"ERROR: ABC ServiceBinding Create: %r\n", Status);
+    DEBUG((DEBUG_ERROR, "ERROR: ABC ServiceBinding Create: %r\n", Status));
     return Status;
   }
 
@@ -74,7 +74,7 @@ MyServiceDriverAppEntryPoint(
     &AbcProtocolStruct
   );
   if (EFI_ERROR(Status)) {
-    Print(L"ERROR: LocateProtocol failed, Status: 0x%x\n", Status);
+    DEBUG((DEBUG_ERROR, "ERROR: LocateProtocol failed, Status: 0x%x\n", Status));
     return Status;
   }
 
@@ -82,7 +82,7 @@ MyServiceDriverAppEntryPoint(
 
   Status = mAbcServiceBindingProtocol->DestroyChild(mAbcServiceBindingProtocol, ChildHandle);
   if (EFI_ERROR(Status)) {
-    Print(L"ERROR: ABC ServiceBinding Destroy: %r\n", Status);
+    DEBUG((DEBUG_ERROR, "ERROR: ABC ServiceBinding Destroy: %r\n", Status));
     return Status;
   }
 
