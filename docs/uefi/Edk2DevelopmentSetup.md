@@ -1,7 +1,7 @@
 
 [Back to Index](../index.md)
 
-**EDK2 Development Setup**
+**EDK2 Development Setup**  
 1) Install Visual Studio 2019
     1) Run Visual Studio installer
     1) Select  
