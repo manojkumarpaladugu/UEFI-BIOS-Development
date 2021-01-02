@@ -1,1 +1,2 @@
-- **UEFI & EDK II Modules**
+- **TianoCore Training:**
+    - **UEFI & EDK II Modules**
