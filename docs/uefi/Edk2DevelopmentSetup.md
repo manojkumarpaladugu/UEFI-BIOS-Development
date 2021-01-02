@@ -3,7 +3,7 @@
 
 **EDK2 Development Setup**  
 1. Install Visual Studio 2019  
-    > 1. Run Visual Studio installer  
+    1. Run Visual Studio installer  
     2. Select  
        Workloads->Desktop development with C++  
        Individual components->MSVC v142 - VS 2019 C++ x64/x86 Spectre-mitigated libs (latest)  
