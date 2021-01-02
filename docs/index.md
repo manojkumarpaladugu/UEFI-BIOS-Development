@@ -16,6 +16,7 @@
 
 **TianoCore**
 * [Training](https://github.com/tianocore-training/Tianocore_Training_Contents/wiki)
+* [EDK2 Documents](https://github.com/tianocore/tianocore.github.io/wiki/EDK-II-Documents)
 
 **Technologies**
 * [Advanced Host Controller Interface (AHCI)](technologies/Ahci.md)
