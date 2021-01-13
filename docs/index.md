@@ -15,7 +15,7 @@
 * [EDK2 Development Setup](uefi/Edk2DevelopmentSetup.md)
 
 **TianoCore**
-* [Training](https://github.com/tianocore-training/Tianocore_Training_Contents/wiki)
+* [Training](uefi/TianoCoreTraining.md)
 * [EDK2 Documents](https://github.com/tianocore/tianocore.github.io/wiki/EDK-II-Documents)
 
 **Technologies**
