@@ -1,0 +1,108 @@
+//// @file
+//
+// TODO: Brief Description of UEFI Driver MyWizardDriver
+//  
+// TODO: Detailed Description of UEFI Driver MyWizardDriver
+//
+// TODO: Copyright for UEFI Driver MyWizardDriver
+//  
+// TODO: License for UEFI Driver MyWizardDriver
+//
+////
+
+#include "MyWizardDriverNVDataStruc.h"
+
+formset
+  guid      = MYWIZARDDRIVER_FORMSET_GUID,
+  title     = STRING_TOKEN(STR_SAMPLE_FORM_SET_TITLE),
+  help      = STRING_TOKEN(STR_SAMPLE_FORM_SET_HELP),
+  classguid = EFI_HII_PLATFORM_SETUP_FORMSET_GUID,
+
+  //
+  // Define a Buffer Storage (EFI_IFR_VARSTORE)
+  //
+  varstore MYWIZARDDRIVER_CONFIGURATION,  // This is the data structure type
+    varid = CONFIGURATION_VARSTORE_ID,    // Optional VarStore ID
+    name  = MWD_IfrNVData,                // Define referenced name in vfr
+    guid  = MYWIZARDDRIVER_FORMSET_GUID;  // GUID of this buffer storage
+
+  defaultstore MyStandardDefault,
+    prompt      = STRING_TOKEN(STR_STANDARD_DEFAULT_PROMPT),
+    attribute   = 0x0000;                         // Default ID: 0000 standard default
+
+  defaultstore MyManufactureDefault,
+    prompt      = STRING_TOKEN(STR_MANUFACTURE_DEFAULT_PROMPT),
+    attribute   = 0x0001;                         // Default ID: 0001 manufacture default
+
+  form 
+    formid = MWD_MAIN_FORM_ID,
+    title  = STRING_TOKEN(STR_SAMPLE_FORM1_TITLE);
+    subtitle text = STRING_TOKEN(STR_SUBTITLE_TEXT1);
+    subtitle text = STRING_TOKEN(STR_SUBTITLE_TEXT2);
+
+   // Define a checkbox to enable / disable the device
+    //
+    checkbox name = DeviceEnable,
+      varid       = MWD_IfrNVData.DeviceEnable,
+      questionid  = DEVICE_ENABLE_QUESTION_ID,
+      prompt      = STRING_TOKEN(STR_DEVICE_ENABLE_PROMPT),
+      help        = STRING_TOKEN(STR_DEVICE_ENABLE_HELP),
+      flags       = INTERACTIVE,
+      default     = 0x0, defaultstore = MyStandardDefault,     // This is standard default value
+      default     = 0x1, defaultstore = MyManufactureDefault,  // This is manufacture default value
+     endcheckbox;
+
+    grayoutif ideqval MWD_IfrNVData.DeviceEnable == 0x0;
+    string name  = ConfigName,
+      // Below varid is causing ASSERT during reset. So, disabling below code for now.
+      //varid      = MWD_IfrNVData.ConfigName,
+      questionid = CONFIG_NAME_QUESTION_ID,
+      prompt     = STRING_TOKEN(STR_CONFIG_NAME_PROMPT),
+      help       = STRING_TOKEN(STR_CONFIG_NAME_HELP),
+      minsize    = CONFIG_NAME_MIN_LENGTH,
+      maxsize    = CONFIG_NAME_MAX_LENGTH,
+    endstring;
+
+    //
+    // Display of Oneof: 'Device Speed'
+    //
+    oneof name    = DeviceSpeed,
+      varid       = MWD_IfrNVData.DeviceSpeed,
+      questionid  = DEVICE_SPEED_QUESTION_ID,
+      prompt      = STRING_TOKEN(STR_DEVICE_SPEED_MODE_PROMPT),
+      help        = STRING_TOKEN(STR_DEVICE_SPEED_MODE_HELP),
+      flags       = DISPLAY_UINT_DEC,
+      option text = STRING_TOKEN(STR_SLOW_MODE),        value = DEVICE_SPEED_SLOW_MODE,        flags = DEFAULT;
+      option text = STRING_TOKEN(STR_FAST_MODE),        value = DEVICE_SPEED_FAST_MODE,        flags = 0;
+      option text = STRING_TOKEN(STR_ULTRA_FAST_MODE),  value = DEVICE_SPEED_ULTRA_FAST_MODE,  flags = 0;
+    endoneof;
+
+    numeric name = MaxStorageSizePerVolume,
+      varid      = MWD_IfrNVData.MaxStorageSizePerVolume,
+      questionid = MAX_SIZE_CHANNEL_QUESTION_ID,
+      prompt     = STRING_TOKEN(STR_MAX_STORAGE_SIZE_VOLUME_PROMPT),
+      help       = STRING_TOKEN(STR_MAX_STORAGE_SIZE_VOLUME_HELP),
+      flags      = DISPLAY_UINT_DEC,
+      minimum    = 50,
+      maximum    = 1000,
+      step       = 0,
+      default    = 50, defaultstore = MyStandardDefault,     // This is standard default value
+      default    = 100, defaultstore = MyManufactureDefault,  // This is manufacture default value
+    endnumeric;
+    endif;
+
+    resetbutton
+      defaultstore = MyStandardDefault,
+      prompt       = STRING_TOKEN(STR_STANDARD_DEFAULT_RESET_PROMPT),
+      help         = STRING_TOKEN(STR_STANDARD_DEFAULT_HELP),
+    endresetbutton;
+
+    resetbutton
+      defaultstore = MyManufactureDefault,
+      prompt       = STRING_TOKEN(STR_MANUFACTURE_DEFAULT_RESET_PROMPT),
+      help         = STRING_TOKEN(STR_MANUFACTURE_DEFAULT_HELP),
+    endresetbutton;
+
+  endform;
+
+endformset;

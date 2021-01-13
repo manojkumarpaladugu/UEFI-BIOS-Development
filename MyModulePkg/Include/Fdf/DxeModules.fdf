@@ -20,16 +20,3 @@ INF MyModulePkg/Driver/PeriodicTimerEvent/PeriodicTimerEvent.inf
 INF MyModulePkg/Driver/SerialIoUefiDriver/SerialIoUefiDriver.inf
 INF MyModulePkg/Driver/WaitKeyPressOrTimerEvent/WaitKeyPressOrTimerEvent.inf
 INF MyModulePkg/Driver/WriteReadUefiVariable/WriteReadUefiVariable.inf
-
-#
-# UEFI Applications
-#
-INF MyModulePkg/Application/MyHelloWorld/MyHelloWorld.inf
-INF MyModulePkg/Application/MyDXESMMApp/MyDXESMMApp.inf
-INF MyModulePkg/Application/MyPCIeEnumeration/MyPCIeEnumeration.inf
-INF MyModulePkg/Application/MySataBlockIoReader/MySataBlockIoReader.inf
-INF MyModulePkg/Application/MyAcpiFadt/MyAcpiFadt.inf
-INF MyModulePkg/Application/MyS3BootScriptTable/MyS3BootScriptTable.inf
-INF MyModulePkg/Application/MyServiceDriverApp/MyServiceDriverApp.inf
-INF MyModulePkg/Application/CountPCIControllers/CountPCIControllers.inf
-INF MyModulePkg/Application/ExampleEvent/ExampleEvent.inf

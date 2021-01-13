@@ -10,7 +10,6 @@
 **/
 
 #include "MyWizardDriver.h"
-// Begin code 
 //HII support
 EFI_GUID           mMyWizardDriverFormSetGuid = MYWIZARDDRIVER_FORMSET_GUID;
 CHAR16             mIfrVariableName[]         = L"MWD_IfrNVData";
@@ -39,7 +38,6 @@ HII_VENDOR_DEVICE_PATH  mHiiVendorDevicePath = {
     }
   }
 };
-// end code
 
 #define  DUMMY_SIZE 100*16		// Dummy buffer
 CHAR16	*DummyBufferfromStart = NULL;
@@ -59,48 +57,24 @@ MyWizardDriverUnload (
   IN EFI_HANDLE  ImageHandle
   )
 {
-  EFI_STATUS  Status;
-  EFI_HANDLE  *HandleBuffer;
-  UINTN       HandleCount;
-  UINTN       Index;
-
-  Status = EFI_SUCCESS;
-  //
-  // Retrieve array of all handles in the handle database
-  //
-  Status = gBS->LocateHandleBuffer (
-                  AllHandles,
-                  NULL,
-                  NULL,
-                  &HandleCount,
-                  &HandleBuffer
-                  );
-  if (EFI_ERROR (Status)) {
-    return Status;
-  }
+  EFI_STATUS  Status = EFI_SUCCESS;
+  DEBUG((DEBUG_INFO, "MyWizardDriverUnload Entry\n"));
 
   //
-  // Disconnect the current driver from handles in the handle database 
+  // Release resources allocated by the entry point.
   //
-  for (Index = 0; Index < HandleCount; Index++) {
-    Status = gBS->DisconnectController (HandleBuffer[Index], gImageHandle, NULL);
-  }
+  HiiRemovePackages(PrivateData->HiiHandle[0]);
+  gBS->UninstallMultipleProtocolInterfaces(
+    ImageHandle,
+    &gEfiDevicePathProtocolGuid,
+    &mHiiVendorDevicePath,
+    &gEfiHiiConfigAccessProtocolGuid,
+    &PrivateData->ConfigAccess,
+    NULL
+  );
 
-  //
-  // Free the array of handles
-  //
-  FreePool (HandleBuffer);
-
-  //
-  // Do any additional cleanup that is required for this driver
-  //
-  if (DummyBufferfromStart != NULL) {
-	  FreePool(DummyBufferfromStart);
-	  DEBUG((EFI_D_INFO, "[MyWizardDriver] Unload, clear buffer\r\n"));
-  }
-  DEBUG((EFI_D_INFO, "[MyWizardDriver] Unload success\r\n"));
-
-  return EFI_SUCCESS;
+  DEBUG((DEBUG_INFO, "MyWizardDriverUnload Exit, Status: %r\n", Status));
+  return Status;
 }
 
 /**
@@ -125,17 +99,17 @@ MyWizardDriverDriverEntryPoint (
 
   EFI_STATUS  Status;
   // HII Locals
-  EFI_HII_PACKAGE_LIST_HEADER *PackageListHeader;
-  EFI_HII_DATABASE_PROTOCOL   *HiiDatabase;
-  EFI_HII_HANDLE              HiiHandle[2];
-  EFI_STRING                  ConfigRequestHdr;
-  UINTN                       BufferSize;
+  EFI_HII_DATABASE_PROTOCOL        *HiiDatabase;
+  EFI_HII_HANDLE                   HiiHandle[2];
+  EFI_HII_STRING_PROTOCOL          *HiiString;
+  EFI_FORM_BROWSER2_PROTOCOL       *FormBrowser2;
+  EFI_HII_CONFIG_ROUTING_PROTOCOL  *HiiConfigRouting;
+  UINTN                            BufferSize;
+  MYWIZARDDRIVER_CONFIGURATION     *Configuration;
+  BOOLEAN                          ActionFlag;
+  EFI_STRING                       ConfigRequestHdr;
 
   Status = EFI_SUCCESS;
-
-  //Now do HII Stuff
-// Initialize the local variables.
-  ConfigRequestHdr = NULL;
 
   // Initialize driver private data
   PrivateData = AllocateZeroPool(sizeof(MYWIZARDDRIVER_DEV));
@@ -144,10 +118,43 @@ MyWizardDriverDriverEntryPoint (
   }
 
   PrivateData->Signature = MYWIZARDDRIVER_DEV_SIGNATURE;
+  PrivateData->ConfigAccess = gMyWizardDriverHiiConfigAccess;
 
-  PrivateData->ConfigAccess.ExtractConfig = MyWizardDriverHiiConfigAccessExtractConfig;
-  PrivateData->ConfigAccess.RouteConfig = MyWizardDriverHiiConfigAccessRouteConfig;
-  PrivateData->ConfigAccess.Callback = MyWizardDriverHiiConfigAccessCallback;
+  //
+  // Locate Hii Database protocol
+  //
+  Status = gBS->LocateProtocol(&gEfiHiiDatabaseProtocolGuid, NULL, (VOID**)&HiiDatabase);
+  if (EFI_ERROR(Status)) {
+    return Status;
+  }
+  PrivateData->HiiDatabase = HiiDatabase;
+
+  //
+  // Locate HiiString protocol
+  //
+  Status = gBS->LocateProtocol(&gEfiHiiStringProtocolGuid, NULL, (VOID**)&HiiString);
+  if (EFI_ERROR(Status)) {
+    return Status;
+  }
+  PrivateData->HiiString = HiiString;
+
+  //
+  // Locate Formbrowser2 protocol
+  //
+  Status = gBS->LocateProtocol(&gEfiFormBrowser2ProtocolGuid, NULL, (VOID**)&FormBrowser2);
+  if (EFI_ERROR(Status)) {
+    return Status;
+  }
+  PrivateData->FormBrowser2 = FormBrowser2;
+
+  //
+  // Locate ConfigRouting protocol
+  //
+  Status = gBS->LocateProtocol(&gEfiHiiConfigRoutingProtocolGuid, NULL, (VOID**)&HiiConfigRouting);
+  if (EFI_ERROR(Status)) {
+    return Status;
+  }
+  PrivateData->HiiConfigRouting = HiiConfigRouting;
 
   //
   // Publish sample Fromset and config access 
@@ -163,69 +170,68 @@ MyWizardDriverDriverEntryPoint (
   ASSERT_EFI_ERROR(Status);
 
   PrivateData->DriverHandle[0] = mDriverHandle[0];
-  // end code
 
   //
-  // Retrieve HII Package List Header on ImageHandle
+  // Publish our HII data
   //
-  Status = gBS->OpenProtocol (
-                  ImageHandle,
-                  &gEfiHiiPackageListProtocolGuid,
-                  (VOID **)&PackageListHeader,
-                  ImageHandle,
-                  NULL,
-                  EFI_OPEN_PROTOCOL_GET_PROTOCOL
-                  );
-  if (!EFI_ERROR (Status)) {
-    //
-    // Retrieve the pointer to the UEFI HII Database Protocol 
-    //
-    Status = gBS->LocateProtocol (
-                    &gEfiHiiDatabaseProtocolGuid, 
-                    NULL, 
-                    (VOID **)&HiiDatabase
-                    );
-    if (!EFI_ERROR (Status)) {
-      //
-      // Register list of HII packages in the HII Database
-      //
-      Status = HiiDatabase->NewPackageList (
-                              HiiDatabase, 
-                              PackageListHeader,
-                              mDriverHandle[0],
-                              &HiiHandle[0]
-                              );
-      ASSERT_EFI_ERROR (Status);
-    }
+  HiiHandle[0] = HiiAddPackages(
+    &mMyWizardDriverFormSetGuid,
+    mDriverHandle[0],
+    MyWizardDriverStrings,
+    MyWizardDriverFormsBin,
+    NULL
+  );
+  if (HiiHandle[0] == NULL) {
+    return EFI_OUT_OF_RESOURCES;
   }
-  Status = EFI_SUCCESS;
 
-  // Begin code
   PrivateData->HiiHandle[0] = HiiHandle[0];
 
-  BufferSize = sizeof(MYWIZARDDRIVER_CONFIGURATION);
+  //
+  // Initialize configuration data
+  //
+  Configuration = &PrivateData->Configuration;
+  ZeroMem(Configuration, sizeof(MYWIZARDDRIVER_CONFIGURATION));
 
-  // Create NV Variable
-  // IF driver is not part of the Platform then need to get/set defaults for the NVRAM configuration that the driver will use.
+  //
+  // Try to read NV config EFI variable first
+  //
+  ConfigRequestHdr = HiiConstructConfigHdr(&mMyWizardDriverFormSetGuid, mIfrVariableName, mDriverHandle[0]);
+  ASSERT(ConfigRequestHdr != NULL);
+
+  BufferSize = sizeof(MYWIZARDDRIVER_CONFIGURATION);
   Status = gRT->GetVariable(
     mIfrVariableName,
     &mMyWizardDriverFormSetGuid,
     NULL,
     &BufferSize,
-    &PrivateData->Configuration
+    Configuration
   );
   if (EFI_ERROR(Status)) {  // Not definded yet so add it to the NV Variables.
         // zero out buffer
-    ZeroMem(&PrivateData->Configuration, sizeof(MYWIZARDDRIVER_CONFIGURATION));
+    ZeroMem(Configuration, sizeof(MYWIZARDDRIVER_CONFIGURATION));
     Status = gRT->SetVariable(
       mIfrVariableName,
       &mMyWizardDriverFormSetGuid,
       EFI_VARIABLE_NON_VOLATILE | EFI_VARIABLE_BOOTSERVICE_ACCESS,
       sizeof(MYWIZARDDRIVER_CONFIGURATION),
-      &PrivateData->Configuration   //  buffer is 000000  now
+      Configuration   //  buffer is 000000  now
     );
+    //
+    // EFI variable for NV config doesn't exist, we should build this variable
+    // based on default values stored in IFR
+    //
+    ActionFlag = HiiSetToDefaults(ConfigRequestHdr, EFI_HII_DEFAULT_CLASS_STANDARD);
+    ASSERT(ActionFlag);
   }
-  // end code
+  else {
+    //
+    // EFI variable does exist and Validate Current Setting
+    //
+    ActionFlag = HiiValidateSettings(ConfigRequestHdr);
+    ASSERT(ActionFlag);
+  }
+  FreePool(ConfigRequestHdr);
 
   DEBUG((DEBUG_INFO, "MyWizardDriverDriverEntryPoint: Exit, Status: 0x%x %r\n", Status, Status));
   return Status;

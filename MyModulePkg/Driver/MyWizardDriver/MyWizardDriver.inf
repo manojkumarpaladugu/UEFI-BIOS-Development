@@ -12,12 +12,12 @@
 [Defines]
   INF_VERSION               = 0x00010005
   BASE_NAME                 = MyWizardDriver
-  FILE_GUID                 = cc5ebb4f-f562-11e7-9211-f48c5049e3a4
-  MODULE_TYPE               = UEFI_DRIVER
-  VERSION_STRING            = 0.01
+  MODULE_UNI_FILE           = MyWizardDriver.uni
+  FILE_GUID                 = 7B1931CB-A7A8-4169-B14E-1DBD2569BD72
+  MODULE_TYPE               = DXE_DRIVER
+  VERSION_STRING            = 1.0
   ENTRY_POINT               = MyWizardDriverDriverEntryPoint
   UNLOAD_IMAGE              = MyWizardDriverUnload
-  UEFI_HII_RESOURCE_SECTION = TRUE
 
 [Packages]
   MdePkg/MdePkg.dec
@@ -28,7 +28,7 @@
   MyWizardDriver.h
   MyWizardDriver.c
   MyWizardDriver.uni
-  MyWizardDriver.vfr
+  MyWizardDriverForms.vfr
   HiiConfigAccess.c
   HiiConfigAccess.h
 
@@ -41,6 +41,7 @@
   UefiLib
   DevicePathLib
   DebugLib
+  HiiLib
 
 [Protocols]
   gEfiDriverBindingProtocolGuid
@@ -48,7 +49,8 @@
   gEfiDriverSupportedEfiVersionProtocolGuid
   gEfiHiiPackageListProtocolGuid
   gEfiHiiDatabaseProtocolGuid
-  gEfiHiiConfigAccessProtocolGuid
+  gEfiDevicePathProtocolGuid                  ## PRODUCES
+  gEfiHiiConfigAccessProtocolGuid             ## PRODUCES
   gEfiSerialIoProtocolGuid
   gEfiHiiStringProtocolGuid                   ## CONSUMES
   gEfiHiiConfigRoutingProtocolGuid            ## CONSUMES
@@ -57,3 +59,9 @@
 
 [Guids]
 gEfiIfrFrontPageGuid                          ## CONSUMES ## GUID
+
+[Depex]
+  gEfiHiiConfigRoutingProtocolGuid  AND
+  gEfiHiiDatabaseProtocolGuid       AND
+  gEfiVariableArchProtocolGuid      AND
+  gEfiVariableWriteArchProtocolGuid

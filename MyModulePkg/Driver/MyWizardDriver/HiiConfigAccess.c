@@ -11,6 +11,9 @@
 
 #include "MyWizardDriver.h"
 
+extern EFI_GUID   mMyWizardDriverFormSetGuid;
+extern CHAR16     mIfrVariableName[];
+
 ///
 /// HII Config Access Protocol instance
 ///
@@ -101,7 +104,78 @@ MyWizardDriverHiiConfigAccessExtractConfig (
   OUT       EFI_STRING                      *Results
   )
 {
-  return EFI_NOT_FOUND;
+  EFI_STATUS                       Status;
+  UINTN                            BufferSize;
+  MYWIZARDDRIVER_DEV               *PrivateData;
+  EFI_HII_CONFIG_ROUTING_PROTOCOL  *HiiConfigRouting;
+  EFI_STRING                       ConfigRequest;
+  EFI_STRING                       ConfigRequestHdr;
+  UINTN                            Size;
+  BOOLEAN                          AllocatedRequest;
+
+  if (Progress == NULL || Results == NULL) {
+    return EFI_INVALID_PARAMETER;
+  }
+
+  //
+  // Initialize the local variables.
+  //
+  ConfigRequestHdr = NULL;
+  ConfigRequest = NULL;
+  Size = 0;
+  *Progress = Request;
+  AllocatedRequest = FALSE;
+  PrivateData = MYWIZARDDRIVER_DEV_FROM_THIS(This);
+  HiiConfigRouting = PrivateData->HiiConfigRouting;
+
+  //
+  // Get Buffer Storage data from EFI variable.
+  // Try to get the current setting from variable.
+  //
+  BufferSize = sizeof(MYWIZARDDRIVER_CONFIGURATION);
+  Status = gRT->GetVariable(
+    mIfrVariableName,
+    &mMyWizardDriverFormSetGuid,
+    NULL,
+    &BufferSize,
+    &PrivateData->Configuration
+  );
+  if (EFI_ERROR(Status)) {
+    return EFI_NOT_FOUND;
+  }
+  if (Request == NULL) {
+    DEBUG((DEBUG_INFO, "\n:: Inside of Extract Config and Request == Null "));
+  }
+  else {
+    ConfigRequest = Request;
+  }
+  //
+  // Convert buffer data to <ConfigResp> by helper function BlockToConfig()
+  //
+  Status = HiiConfigRouting->BlockToConfig(
+    HiiConfigRouting,
+    ConfigRequest,
+    (UINT8*)&PrivateData->Configuration,
+    BufferSize,
+    Results,
+    Progress
+  );
+  //
+  // Free the allocated config request string.
+  //
+  if (AllocatedRequest) {
+    FreePool(ConfigRequest);
+  }
+  //
+  // Set Progress string to the original request string.
+  //
+  if (Request == NULL) {
+    *Progress = NULL;
+  }
+  else if (StrStr(Request, L"OFFSET") == NULL) {
+    *Progress = Request + StrLen(Request);
+  }
+  return Status;
 }
 
 /**
@@ -152,7 +226,62 @@ MyWizardDriverHiiConfigAccessRouteConfig (
   OUT       EFI_STRING                      *Progress
   )
 {
-  return EFI_NOT_FOUND;
+  EFI_STATUS                       Status;
+  UINTN                            BufferSize;
+  MYWIZARDDRIVER_DEV               *PrivateData;
+  EFI_HII_CONFIG_ROUTING_PROTOCOL  *HiiConfigRouting;
+
+  if (Configuration == NULL || Progress == NULL) {
+    return EFI_INVALID_PARAMETER;
+  }
+
+  PrivateData = MYWIZARDDRIVER_DEV_FROM_THIS(This);
+  HiiConfigRouting = PrivateData->HiiConfigRouting;
+  *Progress = Configuration;
+
+  //
+  // Get Buffer Storage data from EFI variable
+  //
+  BufferSize = sizeof(MYWIZARDDRIVER_CONFIGURATION);
+  Status = gRT->GetVariable(
+    mIfrVariableName,
+    &mMyWizardDriverFormSetGuid,
+    NULL,
+    &BufferSize,
+    &PrivateData->Configuration
+  );
+  if (EFI_ERROR(Status)) {
+    return Status;
+  }
+
+  //
+  // Convert <ConfigResp> to buffer data by helper function ConfigToBlock()
+  //
+  BufferSize = sizeof(MYWIZARDDRIVER_CONFIGURATION);
+  Status = HiiConfigRouting->ConfigToBlock(
+    HiiConfigRouting,
+    Configuration,
+    (UINT8*)&PrivateData->Configuration,
+    &BufferSize,
+    Progress
+  );
+  if (EFI_ERROR(Status)) {
+    return Status;
+  }
+
+  //
+  // Store Buffer Storage back to EFI variable
+  //
+  Status = gRT->SetVariable(
+    mIfrVariableName,
+    &mMyWizardDriverFormSetGuid,
+    EFI_VARIABLE_NON_VOLATILE | EFI_VARIABLE_BOOTSERVICE_ACCESS,
+    sizeof(MYWIZARDDRIVER_CONFIGURATION),
+    &PrivateData->Configuration
+  );
+  DEBUG((DEBUG_INFO, "\n:: ROUTE CONFIG Saving the configuration to NVRAM \n"));
+
+  return Status;
 }  
 
 /**
@@ -191,5 +320,64 @@ MyWizardDriverHiiConfigAccessCallback (
   OUT    EFI_BROWSER_ACTION_REQUEST             *ActionRequest
   )
 {
-  return EFI_UNSUPPORTED;
+  MYWIZARDDRIVER_DEV  *PrivateData;
+  EFI_STATUS          Status;
+  EFI_FORM_ID         FormId;
+
+  DEBUG((DEBUG_INFO, ":: START Call back ,Question ID=0x%08x Type=0x%04x Action=0x%04x\n", QuestionId, Type, Action));
+
+  if (((Value == NULL) && (Action != EFI_BROWSER_ACTION_FORM_OPEN) && (Action != EFI_BROWSER_ACTION_FORM_CLOSE)) ||
+    (ActionRequest == NULL)) {
+    return EFI_INVALID_PARAMETER;
+  }
+
+  FormId = 0;
+  Status = EFI_SUCCESS;
+  PrivateData = MYWIZARDDRIVER_DEV_FROM_THIS(This);
+
+  switch (Action) { // Start switch and passed param Action
+  case EFI_BROWSER_ACTION_CHANGING: // 0
+  {
+    DEBUG((DEBUG_INFO, "EFI_BROWSER_ACTION_CHANGING called\n"));
+    break;
+  }
+  case EFI_BROWSER_ACTION_CHANGED: // 1
+  {
+    DEBUG((DEBUG_INFO, "EFI_BROWSER_ACTION_CHANGED called\n"));
+    break;
+  }
+  case EFI_BROWSER_ACTION_RETRIEVE: // 2
+  {
+    DEBUG((DEBUG_INFO, "EFI_BROWSER_ACTION_RETRIEVE called\n"));
+    break;
+  }
+  case EFI_BROWSER_ACTION_FORM_OPEN:  // 3
+  {
+    DEBUG((DEBUG_INFO, "EFI_BROWSER_ACTION_FORM_OPEN called\n"));
+    break;
+  }
+  case EFI_BROWSER_ACTION_FORM_CLOSE: // 4
+  {
+    DEBUG((DEBUG_INFO, "EFI_BROWSER_ACTION_FORM_CLOSE called\n"));
+    break;
+  }
+  case EFI_BROWSER_ACTION_SUBMITTED: // 5
+  {
+    DEBUG((DEBUG_INFO, "EFI_BROWSER_ACTION_SUBMITTED called\n"));
+    break;
+  }
+  case EFI_BROWSER_ACTION_DEFAULT_STANDARD: // 0x1000
+  {
+    DEBUG((DEBUG_INFO, "EFI_BROWSER_ACTION_DEFAULT_STANDARD called\n"));
+    break;
+  }
+  case EFI_BROWSER_ACTION_DEFAULT_MANUFACTURING: // 0x1001
+  {
+    DEBUG((DEBUG_INFO, "EFI_BROWSER_ACTION_DEFAULT_MANUFACTURING called\n"));
+    break;
+  }
+  }
+
+
+  return Status;
 }
