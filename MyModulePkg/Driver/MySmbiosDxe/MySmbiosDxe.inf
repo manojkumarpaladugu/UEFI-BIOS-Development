@@ -1,0 +1,28 @@
+
+[Defines]
+  INF_VERSION = 0x00010005
+  BASE_NAME   = MySmbiosDxe
+  FILE_GUID   = 1C153D0B-152D-464D-9DA2-B34B96CC0D6F
+  MODULE_TYPE = DXE_DRIVER
+  ENTRY_POINT = MySmbiosDxeEntryPoint
+
+[Sources]
+  MySmbiosDxe.h
+  MySmbiosDxe.c
+  MySmbiosDxe.inf
+
+[Packages]
+  MdePkg/MdePkg.dec
+
+[LibraryClasses]
+  UefiDriverEntryPoint
+  DebugLib
+  UefiBootServicesTableLib
+  MemoryAllocationLib
+  BaseMemoryLib
+
+[Protocols]
+  gEfiSmbiosProtocolGuid  ## CONSUMES
+
+[Depex]
+  gEfiSmbiosProtocolGuid
