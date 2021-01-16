@@ -376,8 +376,24 @@ MyWizardDriverHiiConfigAccessCallback (
     DEBUG((DEBUG_INFO, "EFI_BROWSER_ACTION_DEFAULT_MANUFACTURING called\n"));
     break;
   }
+  default:
+    Status = EFI_UNSUPPORTED;
+    break;
   }
 
+  switch (QuestionId) {
+  case DEVICE_ENABLE_QUESTION_ID:
+    DEBUG((DEBUG_INFO, "QuestionId: DEVICE_ENABLE_QUESTION_ID\n"));
+    break;
+
+  case CONFIG_NAME_QUESTION_ID:
+    DEBUG((DEBUG_INFO, "QuestionId: CONFIG_NAME_QUESTION_ID\n"));
+    break;
+
+  default:
+    Status = EFI_UNSUPPORTED;
+    break;
+  }
 
   return Status;
 }

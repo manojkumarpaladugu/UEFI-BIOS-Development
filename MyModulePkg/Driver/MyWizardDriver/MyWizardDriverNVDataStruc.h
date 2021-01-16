@@ -17,14 +17,17 @@
 
 #pragma pack(1)
 typedef struct {
-  BOOLEAN DeviceEnable;
-  CHAR16  ConfigName[CONFIG_NAME_MAX_LENGTH];
-  UINT8   DeviceSpeed;
-  UINT16  MaxStorageSizePerVolume;
+  BOOLEAN       DeviceEnable;
+  UINT8         DeviceSpeed;
+  CHAR16        ConfigName[CONFIG_NAME_MAX_LENGTH]; // String should be on 16 bit boundary
+  UINT16        MaxStorageSizePerVolume;
+  EFI_HII_TIME  Time;
+  EFI_HII_DATE  Date;
 } MYWIZARDDRIVER_CONFIGURATION;
 #pragma pack()
 
 #define MWD_MAIN_FORM_ID              0x1001
+#define MWD_SECOND_FORM_ID            0x1002
 
 #define CONFIG_NAME_QUESTION_ID       0x2001
 #define DEVICE_SPEED_QUESTION_ID      0x2002

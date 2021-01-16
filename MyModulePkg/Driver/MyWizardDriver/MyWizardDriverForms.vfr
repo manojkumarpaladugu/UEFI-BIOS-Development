@@ -40,7 +40,7 @@ formset
     subtitle text = STRING_TOKEN(STR_SUBTITLE_TEXT1);
     subtitle text = STRING_TOKEN(STR_SUBTITLE_TEXT2);
 
-   // Define a checkbox to enable / disable the device
+    // Define a checkbox to enable / disable the device
     //
     checkbox name = DeviceEnable,
       varid       = MWD_IfrNVData.DeviceEnable,
@@ -53,16 +53,6 @@ formset
      endcheckbox;
 
     grayoutif ideqval MWD_IfrNVData.DeviceEnable == 0x0;
-    string name  = ConfigName,
-      // Below varid is causing ASSERT during reset. So, disabling below code for now.
-      //varid      = MWD_IfrNVData.ConfigName,
-      questionid = CONFIG_NAME_QUESTION_ID,
-      prompt     = STRING_TOKEN(STR_CONFIG_NAME_PROMPT),
-      help       = STRING_TOKEN(STR_CONFIG_NAME_HELP),
-      minsize    = CONFIG_NAME_MIN_LENGTH,
-      maxsize    = CONFIG_NAME_MAX_LENGTH,
-    endstring;
-
     //
     // Display of Oneof: 'Device Speed'
     //
@@ -76,6 +66,16 @@ formset
       option text = STRING_TOKEN(STR_FAST_MODE),        value = DEVICE_SPEED_FAST_MODE,        flags = 0;
       option text = STRING_TOKEN(STR_ULTRA_FAST_MODE),  value = DEVICE_SPEED_ULTRA_FAST_MODE,  flags = 0;
     endoneof;
+
+    string name  = ConfigName,
+      varid      = MWD_IfrNVData.ConfigName,
+      questionid = CONFIG_NAME_QUESTION_ID,
+      prompt     = STRING_TOKEN(STR_CONFIG_NAME_PROMPT),
+      help       = STRING_TOKEN(STR_CONFIG_NAME_HELP),
+      flags      = INTERACTIVE,
+      minsize    = CONFIG_NAME_MIN_LENGTH,
+      maxsize    = CONFIG_NAME_MAX_LENGTH,
+    endstring;
 
     numeric name = MaxStorageSizePerVolume,
       varid      = MWD_IfrNVData.MaxStorageSizePerVolume,
@@ -103,6 +103,101 @@ formset
       help         = STRING_TOKEN(STR_MANUFACTURE_DEFAULT_HELP),
     endresetbutton;
 
+    grayoutif  ideqval MWD_IfrNVData.DeviceEnable == 0x0;
+      goto MWD_SECOND_FORM_ID,
+      prompt = STRING_TOKEN(STR_GOTO_FORM2), //SecondSetupPage  
+      help   = STRING_TOKEN(STR_GOTO_HELP);
+   endif;
+
   endform;
+
+    form
+      formid = MWD_SECOND_FORM_ID,               // SecondSetupPage,
+      title = STRING_TOKEN(STR_FORM2_TITLE); 
+
+      grayoutif TRUE; // DATE is the date of the Windows Host so can not change it.;
+      date    year varid  = Date.Year, // Note that it is a member of NULL, 
+                //so the RTC will be the system resource to retrieve and save from
+              prompt      = STRING_TOKEN(STR_DATE_PROMPT),
+              help        = STRING_TOKEN(STR_DATE_HELP),
+              minimum     = 1998,
+              maximum     = 2099,
+              step        = 1,
+              default     = 2010,
+
+              month varid = Date.Month, // Note that it is a member of NULL, 
+                 //so the RTC will be the system resource to retrieve and save from
+              prompt      = STRING_TOKEN(STR_DATE_PROMPT),
+              help        = STRING_TOKEN(STR_DATE_HELP),
+              minimum     = 1,
+              maximum     = 12,
+              step        = 1,
+              default     = 1,
+
+              day varid   = Date.Day, // Note that it is a member of NULL, 
+                //so the RTC will be the system resource to retrieve and save from
+              prompt      = STRING_TOKEN(STR_DATE_PROMPT),
+              help        = STRING_TOKEN(STR_DATE_HELP),
+              minimum     = 1,
+              maximum     = 31,
+              step        = 0x1,
+              default     = 1,
+      enddate;
+    endif;  //grayoutif TRUE DATE
+
+    grayoutif TRUE;  // TIME – WINDOWS TIME
+      time    hour varid  = Time.Hour, // Note that it is a member of NULL, 
+                //so the RTC will be the system resource to retrieve and save from
+              prompt      = STRING_TOKEN(STR_TIME_PROMPT),
+              help        = STRING_TOKEN(STR_TIME_HELP),
+              minimum     = 0,
+              maximum     = 23,
+              step        = 1,
+              default     = 0,
+
+              minute varid  = Time.Minute, // Note that it is a member of NULL, 
+                 //so the RTC will be the system resource to retrieve and save from
+              prompt        = STRING_TOKEN(STR_TIME_PROMPT),
+              help          = STRING_TOKEN(STR_TIME_HELP),
+              minimum       = 0,
+              maximum       = 59,
+              step          = 1,
+              default       = 0,
+
+              second varid  = Time.Second, // Note that it is a member of NULL, 
+                 //so the RTC will be the system resource to retrieve and save from
+              prompt        = STRING_TOKEN(STR_TIME_PROMPT),
+              help          = STRING_TOKEN(STR_TIME_HELP),
+              minimum       = 0,
+              maximum       = 59,
+              step          = 1,
+              default       = 0,
+
+      endtime;
+    endif; //grayoutif TRUE  TIME 
+
+
+      date // My Wizard Driver Date
+            varid = MWD_IfrNVData.Date ,
+            prompt = STRING_TOKEN(STR_MY_DATE_PROMPT),
+            help = STRING_TOKEN(STR_DATE_HELP),
+            flags = STORAGE_NORMAL,
+            default = 2013/01/01,
+      enddate;
+
+      time // My Wizard Driver Time
+            name    = MyTimeMWD, 
+            varid   = MWD_IfrNVData.Time, 
+            prompt  = STRING_TOKEN(STR_MY_TIME_PROMPT), 
+            help    = STRING_TOKEN(STR_TIME_HELP), 
+            flags   = STORAGE_NORMAL ,
+            default = 15:33:33, 
+          endtime;
+
+      goto MWD_MAIN_FORM_ID,
+        prompt = STRING_TOKEN(STR_GOTO_FORM1), //MainSetupPage  
+         // this too has no end-op and basically it's a jump to a form ONLY
+        help   = STRING_TOKEN(STR_GOTO_HELP);
+    endform;
 
 endformset;

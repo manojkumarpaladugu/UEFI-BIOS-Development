@@ -58,7 +58,7 @@
   gEfiHiiDatabaseProtocolGuid                 ## CONSUMES
 
 [Guids]
-gEfiIfrFrontPageGuid                          ## CONSUMES ## GUID
+  gEfiIfrFrontPageGuid                          ## CONSUMES ## GUID
 
 [Depex]
   gEfiHiiConfigRoutingProtocolGuid  AND
