@@ -9,7 +9,7 @@
    * [Phase 4 - Boot Device Selection (BDS)](uefi/BdsPhase.md)
 * [UEFI Service Binding Protocol](uefi/ServiceBindingProtocol.md)
 * [Protocols and Handles](uefi/ProtocolsAndHandles.md)
-* [UEFI Shell](uefi/UefiShell.md)
+* [Useful EFI Shell Commands](uefi/UsefulShellCommands.md)
 
 **EDK2**
 * [EDK2 Development Setup](uefi/Edk2DevelopmentSetup.md)
