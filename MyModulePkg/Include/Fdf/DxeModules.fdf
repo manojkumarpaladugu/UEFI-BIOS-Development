@@ -21,3 +21,4 @@ INF MyModulePkg/Driver/PeriodicTimerEvent/PeriodicTimerEvent.inf
 INF MyModulePkg/Driver/SerialIoUefiDriver/SerialIoUefiDriver.inf
 INF MyModulePkg/Driver/WaitKeyPressOrTimerEvent/WaitKeyPressOrTimerEvent.inf
 INF MyModulePkg/Driver/WriteReadUefiVariable/WriteReadUefiVariable.inf
+INF MyModulePkg/Driver/MySataOpRom/MySataOpRom.inf

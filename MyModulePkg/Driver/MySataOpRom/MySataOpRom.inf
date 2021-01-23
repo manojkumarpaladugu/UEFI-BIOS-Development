@@ -1,0 +1,30 @@
+[Defines]
+  INF_VERSION     = 0x00010005
+  BASE_NAME       = MySataOpRom
+  FILE_GUID       = 28A3FE49-85CD-49BC-AE10-E88BD6E0EE68
+  MODULE_TYPE     = UEFI_DRIVER
+  VERSION_STRING  = 1.0
+  ENTRY_POINT     = MySataOpRomEntryPoint
+  PCI_VENDOR_ID   = 0x8086
+  PCI_DEVICE_ID   = 0x7010
+  PCI_CLASS_CODE  = 0x010180  # Base class code, Sub class code, Register level programming interface
+  PCI_REVISION    = 0x0
+  PCI_COMPRESS    = TRUE
+
+[Sources]
+  MySataOpRom.c
+  ComponentName.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+
+[LibraryClasses]
+  UefiDriverEntryPoint
+  DebugLib
+  UefiLib
+  MemoryAllocationLib
+  BaseMemoryLib
+
+[Protocols]
+  gEfiPciIoProtocolGuid              ## CONSUMES
+  gEfiIdeControllerInitProtocolGuid

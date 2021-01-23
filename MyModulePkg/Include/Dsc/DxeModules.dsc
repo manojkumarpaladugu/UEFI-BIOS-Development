@@ -21,6 +21,7 @@
   MyModulePkg/Driver/SerialIoUefiDriver/SerialIoUefiDriver.inf
   MyModulePkg/Driver/WaitKeyPressOrTimerEvent/WaitKeyPressOrTimerEvent.inf
   MyModulePkg/Driver/WriteReadUefiVariable/WriteReadUefiVariable.inf
+  MyModulePkg/Driver/MySataOpRom/MySataOpRom.inf
 
 #
 # UEFI Applications

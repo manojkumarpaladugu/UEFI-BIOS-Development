@@ -153,7 +153,7 @@ SerialIoUefiDriverEntryPoint(
 	SerialIoDriverBindingProtocol.DriverBindingHandle = ImageHandle;
 
 	Status = gBS->InstallMultipleProtocolInterfaces(
-		SerialIoDriverBindingProtocol.DriverBindingHandle,
+		&SerialIoDriverBindingProtocol.DriverBindingHandle,
 		&gEfiDriverBindingProtocolGuid,
 		&SerialIoDriverBindingProtocol,
 		NULL
