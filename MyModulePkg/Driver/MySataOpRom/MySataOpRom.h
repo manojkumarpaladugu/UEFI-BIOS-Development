@@ -22,6 +22,7 @@
 #include <Library/MemoryAllocationLib.h>
 #include <Protocol/IdeControllerInit.h>
 #include <Library/BaseMemoryLib.h>
+#include <Protocol/DriverDiagnostics.h>
 
 #define IDE_BUS_NUMBER      0
 #define IDE_DEVICE_NUMBER   1
@@ -57,9 +58,11 @@
 
 #define SATA_ENUMER_ALL FALSE
 
-extern EFI_DRIVER_BINDING_PROTOCOL gMySataOpRomDriverBinding;
-extern EFI_COMPONENT_NAME_PROTOCOL gMySataOpRomComponentName;
-extern EFI_COMPONENT_NAME2_PROTOCOL gMySataOpRomComponentName2;
+extern EFI_DRIVER_BINDING_PROTOCOL      gMySataOpRomDriverBinding;
+extern EFI_COMPONENT_NAME_PROTOCOL      gMySataOpRomComponentName;
+extern EFI_COMPONENT_NAME2_PROTOCOL     gMySataOpRomComponentName2;
+extern EFI_DRIVER_DIAGNOSTICS_PROTOCOL  gMySataOpRomDriverDiagnostics;
+extern EFI_DRIVER_DIAGNOSTICS2_PROTOCOL gMySataOpRomDriverDiagnostics2;
 
 //
 // Private context data structure
@@ -129,7 +132,7 @@ MySataOpRomStop(
 
 EFI_STATUS
 EFIAPI
-GetDriverName(
+MySataOpRomGetDriverName(
   IN  EFI_COMPONENT_NAME2_PROTOCOL *This,
   IN  CHAR8                        *Language,
   OUT CHAR16                       **DriverName
@@ -137,12 +140,25 @@ GetDriverName(
 
 EFI_STATUS
 EFIAPI
-GetControllerName(
+MySataOpRomGetControllerName(
   IN  EFI_COMPONENT_NAME2_PROTOCOL *This,
   IN  EFI_HANDLE                   ControllerHandle,
   IN  EFI_HANDLE                   ChildHandle        OPTIONAL,
   IN  CHAR8                        *Language,
   OUT CHAR16                       **ControllerName
+  );
+
+EFI_STATUS
+EFIAPI
+MySataOpRomRunDriverDiagnostics(
+  IN  EFI_DRIVER_DIAGNOSTICS2_PROTOCOL *This,
+  IN  EFI_HANDLE                       ControllerHandle,
+  IN  EFI_HANDLE                       ChildHandle  OPTIONAL,
+  IN  EFI_DRIVER_DIAGNOSTIC_TYPE       DiagnosticType,
+  IN  CHAR8                            *Language,
+  OUT EFI_GUID                         **ErrorType,
+  OUT UINTN                            *BufferSize,
+  OUT CHAR16                           **Buffer
   );
 
 //

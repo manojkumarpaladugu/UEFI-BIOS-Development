@@ -13,20 +13,20 @@ GLOBAL_REMOVE_IF_UNREFERENCED EFI_UNICODE_STRING_TABLE mMySataOpRomControllerNam
 };
 
 GLOBAL_REMOVE_IF_UNREFERENCED EFI_COMPONENT_NAME_PROTOCOL gMySataOpRomComponentName = {
-  (EFI_COMPONENT_NAME_GET_DRIVER_NAME)GetDriverName,
-  (EFI_COMPONENT_NAME_GET_CONTROLLER_NAME)GetControllerName,
+  (EFI_COMPONENT_NAME_GET_DRIVER_NAME)MySataOpRomGetDriverName,
+  (EFI_COMPONENT_NAME_GET_CONTROLLER_NAME)MySataOpRomGetControllerName,
   "engfra"
 };
 
 GLOBAL_REMOVE_IF_UNREFERENCED EFI_COMPONENT_NAME2_PROTOCOL gMySataOpRomComponentName2 = {
-  GetDriverName,
-  GetControllerName,
+  MySataOpRomGetDriverName,
+  MySataOpRomGetControllerName,
   "en;fr"
 };
 
 EFI_STATUS
 EFIAPI
-GetDriverName(
+MySataOpRomGetDriverName(
   IN  EFI_COMPONENT_NAME2_PROTOCOL *This,
   IN  CHAR8                        *Language,
   OUT CHAR16                       **DriverName
@@ -43,7 +43,7 @@ GetDriverName(
 
 EFI_STATUS
 EFIAPI
-GetControllerName(
+MySataOpRomGetControllerName(
   IN  EFI_COMPONENT_NAME2_PROTOCOL *This,
   IN  EFI_HANDLE                   ControllerHandle,
   IN  EFI_HANDLE                   ChildHandle        OPTIONAL,

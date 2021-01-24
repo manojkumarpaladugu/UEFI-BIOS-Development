@@ -12,8 +12,9 @@
   PCI_COMPRESS    = TRUE
 
 [Sources]
-  MySataOpRom.c
+  DriverDiagnostics.c
   ComponentName.c
+  MySataOpRom.c
 
 [Packages]
   MdePkg/MdePkg.dec

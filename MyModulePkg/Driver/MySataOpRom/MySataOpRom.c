@@ -55,7 +55,7 @@ MySataOpRomSupported (
                     );
   if (EFI_ERROR (Status)) {
     DEBUG ((DEBUG_ERROR, "Pci.Read failed. Status: 0x%x, %r\n", Status, Status));
-    goto Done;
+    goto CloseProtocol;
   }
 
   DEBUG ((DEBUG_INFO, "Evaluating if this driver supports device with Vendor ID: 0x%X, Device ID: 0x%X\n", PciCfg.Hdr.VendorId, PciCfg.Hdr.DeviceId));
@@ -65,7 +65,7 @@ MySataOpRomSupported (
     Status = EFI_UNSUPPORTED;
   }
 
-Done:
+CloseProtocol:
   gBS->CloseProtocol(
           ControllerHandle,
           &gEfiPciIoProtocolGuid,
@@ -137,24 +137,8 @@ MySataOpRomStart (
                   );
   if (EFI_ERROR(Status)) {
     DEBUG((DEBUG_ERROR, "OpenProtocol failed. Status: 0x%x, %r\n", Status, Status));
-    goto CloseProtocol;
+    return Status;
   }
-
-  gPrivateData = AllocateZeroPool(sizeof(EFI_MY_SATA_CONTROLLER_PRIVATE_DATA));
-  if (gPrivateData == NULL) {
-    Status = EFI_OUT_OF_RESOURCES;
-    goto CloseProtocol;
-  }
-
-  gPrivateData->Signature = MY_SATA_CONTROLLER_SIGNATURE;
-  gPrivateData->PciIo = PciIo;
-  gPrivateData->IdeInit.GetChannelInfo = IdeInitGetChannelInfo;
-  gPrivateData->IdeInit.NotifyPhase = IdeInitNotifyPhase;
-  gPrivateData->IdeInit.SubmitData = IdeInitSubmitData;
-  gPrivateData->IdeInit.DisqualifyMode = IdeInitDisqualifyMode;
-  gPrivateData->IdeInit.CalculateMode = IdeInitCalculateMode;
-  gPrivateData->IdeInit.SetTiming = IdeInitSetTiming;
-  gPrivateData->IdeInit.EnumAll = SATA_ENUMER_ALL;
 
   Status = PciIo->Attributes (
                     PciIo,
@@ -189,6 +173,25 @@ MySataOpRomStart (
     goto CloseProtocol;
   }
 
+  gPrivateData = AllocateZeroPool(sizeof(EFI_MY_SATA_CONTROLLER_PRIVATE_DATA));
+  if (gPrivateData == NULL) {
+    Status = EFI_OUT_OF_RESOURCES;
+    goto RestoreOriginalPciAttributes;
+  }
+
+  gPrivateData->Signature = MY_SATA_CONTROLLER_SIGNATURE;
+  gPrivateData->PciIo = PciIo;
+  gPrivateData->IdeInit.GetChannelInfo = IdeInitGetChannelInfo;
+  gPrivateData->IdeInit.NotifyPhase = IdeInitNotifyPhase;
+  gPrivateData->IdeInit.SubmitData = IdeInitSubmitData;
+  gPrivateData->IdeInit.DisqualifyMode = IdeInitDisqualifyMode;
+  gPrivateData->IdeInit.CalculateMode = IdeInitCalculateMode;
+  gPrivateData->IdeInit.SetTiming = IdeInitSetTiming;
+  gPrivateData->IdeInit.EnumAll = SATA_ENUMER_ALL;
+
+  //
+  // Read PCI config space
+  //
   Status = PciIo->Pci.Read(
                         PciIo,
                         EfiPciIoWidthUint32,
@@ -200,7 +203,14 @@ MySataOpRomStart (
     goto FreeSataPrivateData;
   }
 
-  DEBUG ((DEBUG_INFO, "VID: 0x%X, DID: 0x%X, ClassCode: 0x%2X%2X%2X, RevisionID: 0x%X\n", PciCfg.Hdr.VendorId, PciCfg.Hdr.DeviceId, PciCfg.Hdr.ClassCode[2], PciCfg.Hdr.ClassCode[1], PciCfg.Hdr.ClassCode[0], PciCfg.Hdr.RevisionID));
+  DEBUG ((DEBUG_INFO, "VID: 0x%X, DID: 0x%X, ClassCode: 0x%2X%2X%2X, RevisionID: 0x%X\n",
+    PciCfg.Hdr.VendorId,
+    PciCfg.Hdr.DeviceId,
+    PciCfg.Hdr.ClassCode[2],
+    PciCfg.Hdr.ClassCode[1],
+    PciCfg.Hdr.ClassCode[0],
+    PciCfg.Hdr.RevisionID
+    ));
 
   if (IS_PCI_IDE(&PciCfg)) {
     gPrivateData->IdeInit.ChannelCount = IDE_MAX_CHANNEL;
@@ -266,12 +276,13 @@ FreeDisqualifiedModes:
 FreeSataPrivateData:
   FreePool(gPrivateData);
 
-          PciIo->Attributes (
-            PciIo,
-            EfiPciIoAttributeOperationSet,
-            gPrivateData->OriginalPciAttributes,
-            NULL
-            );
+RestoreOriginalPciAttributes:
+  PciIo->Attributes(
+          PciIo,
+          EfiPciIoAttributeOperationSet,
+          gPrivateData->OriginalPciAttributes,
+          NULL
+          );
 
 CloseProtocol:
   gBS->CloseProtocol(
@@ -280,6 +291,7 @@ CloseProtocol:
           This->DriverBindingHandle,
           ControllerHandle
           );
+
   DEBUG ((DEBUG_INFO, "MySataOpRomStart: Exit. Status: 0x%x, %r\n", Status, Status));
   return Status;
 }
@@ -360,16 +372,30 @@ MySataOpRomEntryPoint (
   gMySataOpRomDriverBinding.ImageHandle = ImageHandle;
   gMySataOpRomDriverBinding.DriverBindingHandle = ImageHandle;
 
-  Status = EfiLibInstallDriverBindingComponentName2 (
-            gMySataOpRomDriverBinding.ImageHandle,
-            SystemTable,
-            &gMySataOpRomDriverBinding,
-            gMySataOpRomDriverBinding.DriverBindingHandle,
-            &gMySataOpRomComponentName,
-            &gMySataOpRomComponentName2
-            );
+  //Status = EfiLibInstallDriverBindingComponentName2 (
+  //          gMySataOpRomDriverBinding.ImageHandle,
+  //          SystemTable,
+  //          &gMySataOpRomDriverBinding,
+  //          gMySataOpRomDriverBinding.DriverBindingHandle,
+  //          &gMySataOpRomComponentName,
+  //          &gMySataOpRomComponentName2
+  //          );
+  //ASSERT_EFI_ERROR (Status);
 
-  ASSERT_EFI_ERROR (Status);
+  Status = EfiLibInstallAllDriverProtocols2 (
+              gMySataOpRomDriverBinding.ImageHandle,
+              SystemTable,
+              &gMySataOpRomDriverBinding,
+              gMySataOpRomDriverBinding.DriverBindingHandle,
+              &gMySataOpRomComponentName,
+              &gMySataOpRomComponentName2,
+              NULL,
+              NULL,
+              &gMySataOpRomDriverDiagnostics,
+              &gMySataOpRomDriverDiagnostics2
+              );
+  ASSERT_EFI_ERROR(Status);
+
   DEBUG((DEBUG_INFO, "MySataOpRomEntryPoint: Exit\n"));
   return Status;
 }
