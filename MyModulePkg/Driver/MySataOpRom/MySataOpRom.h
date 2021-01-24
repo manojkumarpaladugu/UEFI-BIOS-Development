@@ -23,6 +23,7 @@
 #include <Protocol/IdeControllerInit.h>
 #include <Library/BaseMemoryLib.h>
 #include <Protocol/DriverDiagnostics.h>
+#include <Protocol/DriverSupportedEfiVersion.h>
 
 #define IDE_BUS_NUMBER      0
 #define IDE_DEVICE_NUMBER   1

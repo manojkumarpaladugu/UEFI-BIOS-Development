@@ -10,6 +10,11 @@
 
 EFI_MY_SATA_CONTROLLER_PRIVATE_DATA *gPrivateData;
 
+GLOBAL_REMOVE_IF_UNREFERENCED EFI_DRIVER_SUPPORTED_EFI_VERSION_PROTOCOL gMySataOpRomDriverSupportedEfiVersion = {
+  sizeof (EFI_DRIVER_SUPPORTED_EFI_VERSION_PROTOCOL),
+  EFI_2_80_SYSTEM_TABLE_REVISION
+};
+
 GLOBAL_REMOVE_IF_UNREFERENCED EFI_DRIVER_BINDING_PROTOCOL gMySataOpRomDriverBinding = {
   MySataOpRomSupported,
   MySataOpRomStart,
@@ -372,16 +377,6 @@ MySataOpRomEntryPoint (
   gMySataOpRomDriverBinding.ImageHandle = ImageHandle;
   gMySataOpRomDriverBinding.DriverBindingHandle = ImageHandle;
 
-  //Status = EfiLibInstallDriverBindingComponentName2 (
-  //          gMySataOpRomDriverBinding.ImageHandle,
-  //          SystemTable,
-  //          &gMySataOpRomDriverBinding,
-  //          gMySataOpRomDriverBinding.DriverBindingHandle,
-  //          &gMySataOpRomComponentName,
-  //          &gMySataOpRomComponentName2
-  //          );
-  //ASSERT_EFI_ERROR (Status);
-
   Status = EfiLibInstallAllDriverProtocols2 (
               gMySataOpRomDriverBinding.ImageHandle,
               SystemTable,
@@ -394,6 +389,14 @@ MySataOpRomEntryPoint (
               &gMySataOpRomDriverDiagnostics,
               &gMySataOpRomDriverDiagnostics2
               );
+  ASSERT_EFI_ERROR(Status);
+
+  Status = gBS->InstallMultipleProtocolInterfaces (
+    &ImageHandle,
+    &gEfiDriverSupportedEfiVersionProtocolGuid,
+    &gMySataOpRomDriverSupportedEfiVersion,
+    NULL
+    );
   ASSERT_EFI_ERROR(Status);
 
   DEBUG((DEBUG_INFO, "MySataOpRomEntryPoint: Exit\n"));

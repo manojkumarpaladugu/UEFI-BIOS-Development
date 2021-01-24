@@ -27,5 +27,6 @@
   BaseMemoryLib
 
 [Protocols]
-  gEfiPciIoProtocolGuid              ## CONSUMES
-  gEfiIdeControllerInitProtocolGuid
+  gEfiPciIoProtocolGuid                      ## CONSUMES
+  gEfiIdeControllerInitProtocolGuid          ## PRODUCES
+  gEfiDriverSupportedEfiVersionProtocolGuid  ## PRODUCES
