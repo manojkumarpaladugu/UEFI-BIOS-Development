@@ -1,6 +1,6 @@
 [Back to Index](../index.md)
 
-```diff
+```json
 + **EFI SCSI Driver Stack Overview:** 
 ```
 The EFI SCSI Driver Stack includes the SCSI Pass Thru Driver, SCSI Bus Driver and individual SCSI Device Drivers.
