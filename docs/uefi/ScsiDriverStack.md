@@ -3,7 +3,8 @@
 # EFI SCSI Driver Stack Overview:  
 The EFI SCSI Driver Stack includes the SCSI Pass Thru Driver, SCSI Bus Driver and individual SCSI Device Drivers.
 
-**SCSI Host Controller Driver:** It manages a SCSI Host Controller that contains one or more SCSI buses. It creates SCSI Bus Controller Handles on each SCSI bus, and consumes PCI IO Protocol and attaches Extended SCSI Pass Thru Protocol and Device Path Protocol on each handle the driver produced.
+###### SCSI Host Controller Driver:
+It manages a SCSI Host Controller that contains one or more SCSI buses. It creates SCSI Bus Controller Handles on each SCSI bus, and consumes PCI IO Protocol and attaches Extended SCSI Pass Thru Protocol and Device Path Protocol on each handle the driver produced.
 
 **SCSI Bus Driver:** A SCSI Bus Driver manages a SCSI Bus Controller Handle that is created by SCSI Host Controller Driver. It creates SCSI Device Handles for each SCSI Device Controller detected during SCSI bus enumeration, and consumes SCSI Pass Thru Protocol and installs SCSI IO Protocol and Device Path Protocol on each handle the driver produced.
 
