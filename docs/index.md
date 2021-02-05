@@ -10,6 +10,7 @@
 * [UEFI Service Binding Protocol](uefi/ServiceBindingProtocol.md)
 * [Protocols and Handles](uefi/ProtocolsAndHandles.md)
 * [Useful EFI Shell Commands](uefi/UsefulShellCommands.md)
+* [SCSI Driver Stack Overview](uefi/ScsiDriverStack.md)
 
 **EDK2**
 * [EDK2 Development Setup](uefi/Edk2DevelopmentSetup.md)
