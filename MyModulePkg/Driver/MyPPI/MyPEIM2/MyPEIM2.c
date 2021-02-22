@@ -1,6 +1,6 @@
 /** @file
-  This is a sample UEFI PEI driver to consume a PPI.
-
+  This is a sample UEFI PEI driver to consume a PPI MyPEIM1PpiGuid and then display its data value.
+  We also try to modify data value and will check in MyPEIM3.c if the modified data reflects there too.
 **/
 
 #include <PiPei.h>
@@ -28,11 +28,13 @@ MyPEIM2EntryPoint(
 
     Status = PeiServicesLocatePpi(&MyPEIM1PpiGuid, 0, NULL, (VOID**)&Ppi);
     if (EFI_ERROR(Status)) {
-        DEBUG((DEBUG_INFO, "MyPEIM2EntryPoint: PeiServicesLocatePpi failed, Status: 0x%x\n", Status));
+        DEBUG((DEBUG_ERROR, "MyPEIM2EntryPoint: PeiServicesLocatePpi failed, Status: 0x%x\n", Status));
     }
     else
     {
         DEBUG((DEBUG_INFO, "MyPEIM2EntryPoint: PeiServicesLocatePpi Successful, Data: %d\n", Ppi->Data));
+        Ppi->Data = 10;
+        DEBUG((DEBUG_INFO, "MyPEIM2EntryPoint: Modified Data: %d\n", Ppi->Data));
     }
 
     DEBUG((DEBUG_INFO, "MyPEIM2EntryPoint: Exit\n"));

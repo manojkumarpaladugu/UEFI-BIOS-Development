@@ -1,0 +1,29 @@
+# MyPEIM3.inf
+#  This is a sample UEFI PEI driver to consume a PPI MyPEIM1PpiGuid and then display its data value.
+#
+
+[Defines]
+  INF_VERSION    = 0x00010005
+  BASE_NAME      = MyPeim3
+  FILE_GUID      = DE5DE04F-0191-421B-82B0-E6A8C26695C0
+  MODULE_TYPE    = PEIM
+  VERSION_STRING = 1.0
+  ENTRY_POINT    = MyPeim3EntryPoint
+
+[Sources]
+  MyPeim3.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MyModulePkg/MyModulePkg.dec
+
+[LibraryClasses]
+  PeimEntryPoint
+  PeiServicesLib
+  DebugLib
+
+[Ppis]
+  MyPEIM1PpiGuid        # CONSUMES
+
+[Depex]
+  MyPEIM1PpiGuid

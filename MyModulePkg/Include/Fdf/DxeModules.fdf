@@ -1,24 +1,24 @@
 #
 # DXE Drivers
 #
-INF MyModulePkg/Driver/MyDXE/MyDXE.inf
-INF MyModulePkg/Driver/MyHOB/MyHobDxe/MyHobDxe.inf
-INF MyModulePkg/Driver/MyDXEEventNotify/MyDXEEventNotify.inf
-INF MyModulePkg/Driver/MyProtocol/MyProtocolDXE1/MyProtocolDXE1.inf
-INF MyModulePkg/Driver/MyProtocol/MyProtocolDXE2/MyProtocolDXE2.inf
-INF MyModulePkg/Driver/MyDXESMM/MyDXESMM.inf
-INF MyModulePkg/Driver/MySmbiosDxe/MySmbiosDxe.inf
+#INF MyModulePkg/Driver/MyDXE/MyDXE.inf
+#INF MyModulePkg/Driver/MyHOB/MyHobDxe/MyHobDxe.inf
+#INF MyModulePkg/Driver/MyDXEEventNotify/MyDXEEventNotify.inf
+#INF MyModulePkg/Driver/MyProtocol/MyProtocolDXE1/MyProtocolDXE1.inf
+#INF MyModulePkg/Driver/MyProtocol/MyProtocolDXE2/MyProtocolDXE2.inf
+#INF MyModulePkg/Driver/MyDXESMM/MyDXESMM.inf
+#INF MyModulePkg/Driver/MySmbiosDxe/MySmbiosDxe.inf
 
 #
 # UEFI Drivers
 #
-INF MyModulePkg/Driver/MyServiceDriver/MyServiceDriver.inf
-INF MyModulePkg/Driver/EvtExitBootServices/EvtExitBootServices.inf
-INF MyModulePkg/Driver/GetUefiVariableStorageInfo/GetUefiVariableStorageInfo.inf
-INF MyModulePkg/Driver/MyWizardDriver/MyWizardDriver.inf
-INF MyModulePkg/Driver/OneShotTimerEvent/OneShotTimerEvent.inf
-INF MyModulePkg/Driver/PeriodicTimerEvent/PeriodicTimerEvent.inf
-INF MyModulePkg/Driver/SerialIoUefiDriver/SerialIoUefiDriver.inf
-INF MyModulePkg/Driver/WaitKeyPressOrTimerEvent/WaitKeyPressOrTimerEvent.inf
-INF MyModulePkg/Driver/WriteReadUefiVariable/WriteReadUefiVariable.inf
-INF MyModulePkg/Driver/MySataOpRom/MySataOpRom.inf
+#INF MyModulePkg/Driver/MyServiceDriver/MyServiceDriver.inf
+#INF MyModulePkg/Driver/EvtExitBootServices/EvtExitBootServices.inf
+#INF MyModulePkg/Driver/GetUefiVariableStorageInfo/GetUefiVariableStorageInfo.inf
+#INF MyModulePkg/Driver/MyWizardDriver/MyWizardDriver.inf
+#INF MyModulePkg/Driver/OneShotTimerEvent/OneShotTimerEvent.inf
+#INF MyModulePkg/Driver/PeriodicTimerEvent/PeriodicTimerEvent.inf
+#INF MyModulePkg/Driver/SerialIoUefiDriver/SerialIoUefiDriver.inf
+#INF MyModulePkg/Driver/WaitKeyPressOrTimerEvent/WaitKeyPressOrTimerEvent.inf
+#INF MyModulePkg/Driver/WriteReadUefiVariable/WriteReadUefiVariable.inf
+#INF MyModulePkg/Driver/MySataOpRom/MySataOpRom.inf
