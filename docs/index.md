@@ -22,3 +22,6 @@
 **Technologies**
 * [Advanced Host Controller Interface (AHCI)](technologies/Ahci.md)
 * [Non Volative Memory express (NVMe)](technologies/Nvme.md)
+
+**FAQ:**
+* [FAQ](Faq.md)
