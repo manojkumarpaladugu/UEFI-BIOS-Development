@@ -24,4 +24,4 @@
 * [Non Volative Memory express (NVMe)](technologies/Nvme.md)
 
 **FAQ:**
-* [FAQ](Faq.md)
+* [FAQ](uefi/Faq.md)
