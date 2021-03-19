@@ -62,8 +62,8 @@ formset
       prompt      = STRING_TOKEN(STR_DEVICE_SPEED_MODE_PROMPT),
       help        = STRING_TOKEN(STR_DEVICE_SPEED_MODE_HELP),
       flags       = DISPLAY_UINT_DEC,
-      option text = STRING_TOKEN(STR_SLOW_MODE),        value = DEVICE_SPEED_SLOW_MODE,        flags = DEFAULT;
-      option text = STRING_TOKEN(STR_FAST_MODE),        value = DEVICE_SPEED_FAST_MODE,        flags = 0;
+      option text = STRING_TOKEN(STR_SLOW_MODE),        value = DEVICE_SPEED_SLOW_MODE,        flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_FAST_MODE),        value = DEVICE_SPEED_FAST_MODE,        flags = RESET_REQUIRED;
       option text = STRING_TOKEN(STR_ULTRA_FAST_MODE),  value = DEVICE_SPEED_ULTRA_FAST_MODE,  flags = 0;
     endoneof;
 
@@ -145,7 +145,7 @@ formset
       enddate;
     endif;  //grayoutif TRUE DATE
 
-    grayoutif TRUE;  // TIME – WINDOWS TIME
+    grayoutif TRUE;  // TIME â€“ WINDOWS TIME
       time    hour varid  = Time.Hour, // Note that it is a member of NULL, 
                 //so the RTC will be the system resource to retrieve and save from
               prompt      = STRING_TOKEN(STR_TIME_PROMPT),
