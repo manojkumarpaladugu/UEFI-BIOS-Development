@@ -1,0 +1,9 @@
+#langdef en-US "English(US)"
+
+#string STR_FORMSET_TITLE        #language en-US "Debug Configuration"
+#string STR_FORMSET_HELP         #language en-US "Help for Debug Configuration"
+
+#string STR_FORM1_TITLE          #language en-US "Debug Configuration"
+
+#string STR_SERIALIO_UART_ENABLE #language en-US "Serial IO UART"
+#string STR_SERIALIO_UART_HELP   #language en-US "Enable or disable Serial IO UART"

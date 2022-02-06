@@ -1,6 +1,10 @@
 #
 # PEI Drivers
 #
+  #
+  # This DebugErrorLevelInit.inf should only be included in OvmfPkgIa32.dsc
+  #
+  # INF MyModulePkg/Driver/Setup/DebugErrorLevelInit/DebugErrorLevelInit.inf
 #  INF MyModulePkg/Driver/MyPEIM/MyPEIM.inf
 #  INF MyModulePkg/Driver/MyPPI/MyPEIM1/MyPEIM1.inf
 #  INF MyModulePkg/Driver/MyPPI/MyPEIM2/MyPEIM2.inf

@@ -113,6 +113,8 @@ MyWizardDriverHiiConfigAccessExtractConfig (
   UINTN                            Size;
   BOOLEAN                          AllocatedRequest;
 
+  DEBUG((DEBUG_INFO, "Func: %a Entry\n", __FUNCTION__));
+
   if (Progress == NULL || Results == NULL) {
     return EFI_INVALID_PARAMETER;
   }
@@ -149,6 +151,8 @@ MyWizardDriverHiiConfigAccessExtractConfig (
   else {
     ConfigRequest = Request;
   }
+
+  DEBUG((DEBUG_INFO, "Func: %a, Request: %s\n", __FUNCTION__, Request));
   //
   // Convert buffer data to <ConfigResp> by helper function BlockToConfig()
   //
@@ -160,6 +164,13 @@ MyWizardDriverHiiConfigAccessExtractConfig (
     Results,
     Progress
   );
+  if (EFI_ERROR(Status)) {
+    DEBUG((DEBUG_ERROR, "%a: BlockToConfig(): %r, Progress=\"%s\"\n",
+      __FUNCTION__, Status, (Status == EFI_DEVICE_ERROR) ? NULL : *Progress));
+  }
+  else {
+    DEBUG((DEBUG_INFO, "%a: Results=\"%s\"\n", __FUNCTION__, *Results));
+  }
   //
   // Free the allocated config request string.
   //
@@ -175,6 +186,8 @@ MyWizardDriverHiiConfigAccessExtractConfig (
   else if (StrStr(Request, L"OFFSET") == NULL) {
     *Progress = Request + StrLen(Request);
   }
+
+  DEBUG((DEBUG_INFO, "Func: %a Exit, Status: 0x%x - %r\n", __FUNCTION__, Status, Status));
   return Status;
 }
 
@@ -231,6 +244,8 @@ MyWizardDriverHiiConfigAccessRouteConfig (
   MYWIZARDDRIVER_DEV               *PrivateData;
   EFI_HII_CONFIG_ROUTING_PROTOCOL  *HiiConfigRouting;
 
+  DEBUG((DEBUG_INFO, "Func: %a Entry\n", __FUNCTION__));
+
   if (Configuration == NULL || Progress == NULL) {
     return EFI_INVALID_PARAMETER;
   }
@@ -279,8 +294,8 @@ MyWizardDriverHiiConfigAccessRouteConfig (
     sizeof(MYWIZARDDRIVER_CONFIGURATION),
     &PrivateData->Configuration
   );
-  DEBUG((DEBUG_INFO, "\n:: ROUTE CONFIG Saving the configuration to NVRAM \n"));
 
+  DEBUG((DEBUG_INFO, "Func: %a Exit, Status: 0x%x - %r\n", __FUNCTION__, Status, Status));
   return Status;
 }  
 

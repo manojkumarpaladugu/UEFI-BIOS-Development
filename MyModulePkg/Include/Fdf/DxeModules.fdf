@@ -8,6 +8,8 @@
 #INF MyModulePkg/Driver/MyProtocol/MyProtocolDXE2/MyProtocolDXE2.inf
 #INF MyModulePkg/Driver/MyDXESMM/MyDXESMM.inf
 #INF MyModulePkg/Driver/MySmbiosDxe/MySmbiosDxe.inf
+#INF MyModulePkg/Driver/MyWizardDriver/MyWizardDriver.inf
+INF MyModulePkg/Driver/Setup/DebugConfigurationMenu/DebugConfigurationMenu.inf
 
 #
 # UEFI Drivers
@@ -15,7 +17,6 @@
 #INF MyModulePkg/Driver/MyServiceDriver/MyServiceDriver.inf
 #INF MyModulePkg/Driver/EvtExitBootServices/EvtExitBootServices.inf
 #INF MyModulePkg/Driver/GetUefiVariableStorageInfo/GetUefiVariableStorageInfo.inf
-#INF MyModulePkg/Driver/MyWizardDriver/MyWizardDriver.inf
 #INF MyModulePkg/Driver/OneShotTimerEvent/OneShotTimerEvent.inf
 #INF MyModulePkg/Driver/PeriodicTimerEvent/PeriodicTimerEvent.inf
 #INF MyModulePkg/Driver/SerialIoUefiDriver/SerialIoUefiDriver.inf

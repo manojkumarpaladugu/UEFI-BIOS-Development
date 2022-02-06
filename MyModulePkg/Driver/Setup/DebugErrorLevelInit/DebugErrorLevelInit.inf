@@ -1,0 +1,30 @@
+[Defines]
+  INF_VERSION    = 0x00010005
+  BASE_NAME      = DebugErrorLevelInit
+  FILE_GUID      = B6CFF996-33FE-4B81-91D8-175335691967
+  MODULE_TYPE    = PEIM
+  VERSION_STRING = 1.0
+  ENTRY_POINT    = DebugErrorLevelInitEntryPoint
+
+[Sources]
+  DebugErrorLevelInit.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  MyModulePkg/MyModulePkg.dec
+
+[LibraryClasses]
+  PeimEntryPoint
+  PeiServicesLib
+  DebugLib
+  HobLib
+
+[Guids]
+  gDebugConfigHobGuid  # PRODUCES
+
+[Ppis]
+  gEfiPeiReadOnlyVariable2PpiGuid  # SOMETIMES_CONSUMES - NOTIFY
+
+[Depex]
+  TRUE

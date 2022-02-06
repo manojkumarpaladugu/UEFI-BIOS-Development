@@ -1,0 +1,45 @@
+
+
+[Defines]
+  INF_VERSION     = 0x00010005
+  BASE_NAME       = DebugConfigurationMenu
+  MODULE_UNI_FILE = DebugConfigurationMenu.uni
+  FILE_GUID       = BB981FD2-0CBB-4C05-A2A8-696D52D9BE12
+  MODULE_TYPE     = DXE_DRIVER
+  VERSION_STRING  = 1.0
+  ENTRY_POINT     = DebugConfigurationMenuEntryPoint
+
+[Sources]
+  DebugConfigurationMenu.h
+  DebugConfigurationMenu.c
+  HiiConfigAccess.c
+  DebugConfigurationMenu.uni
+  DebugConfigurationMenuForms.vfr
+
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  MyModulePkg/MyModulePkg.dec
+
+[LibraryClasses]
+  DebugLib
+  HiiLib
+  BaseLib
+  DevicePathLib
+  BaseMemoryLib
+  MemoryAllocationLib
+  UefiDriverEntryPoint
+  UefiRuntimeServicesTableLib
+  UefiBootServicesTableLib
+
+[Protocols]
+  gEfiDevicePathProtocolGuid                  ## PRODUCES
+  gEfiHiiConfigAccessProtocolGuid             ## PRODUCES
+  gEfiHiiConfigRoutingProtocolGuid            ## CONSUMES
+
+[Depex]
+  gEfiHiiConfigRoutingProtocolGuid  AND
+  gEfiHiiDatabaseProtocolGuid       AND
+  gEfiVariableArchProtocolGuid      AND
+  gEfiVariableWriteArchProtocolGuid

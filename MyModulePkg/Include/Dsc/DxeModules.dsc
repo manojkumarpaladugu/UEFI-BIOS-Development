@@ -8,6 +8,7 @@
   MyModulePkg/Driver/MyProtocol/MyProtocolDXE2/MyProtocolDXE2.inf
   MyModulePkg/Driver/MyDXESMM/MyDXESMM.inf
   MyModulePkg/Driver/MySmbiosDxe/MySmbiosDxe.inf
+  MyModulePkg/Driver/Setup/DebugConfigurationMenu/DebugConfigurationMenu.inf
 
 #
 # UEFI Drivers

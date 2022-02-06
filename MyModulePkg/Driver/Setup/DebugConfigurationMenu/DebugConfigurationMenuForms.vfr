@@ -1,0 +1,30 @@
+#include <Setup/Setup.h>
+
+formset
+  guid      = DEBUG_CONFIGURATION_MENU_FORMSET_GUID,
+  title     = STRING_TOKEN(STR_FORMSET_TITLE),
+  help      = STRING_TOKEN(STR_FORMSET_HELP),
+  classguid = EFI_HII_PLATFORM_SETUP_FORMSET_GUID,
+
+  varstore DEBUG_CONFIGURATION_MENU_VAR,
+    varid = DEBUG_CONFIGURATION_MENU_VARID,
+    name  = DcmIfrNvData,
+    guid  = DEBUG_CONFIGURATION_MENU_FORMSET_GUID;
+
+    form
+      formid = DEBUG_CONFIGURATION_MENU_FORM1_ID,
+      title  = STRING_TOKEN(STR_FORM1_TITLE);
+
+      checkbox
+        name       = SerialIoUartEnable,
+        varid      = DcmIfrNvData.SerialIoUartEnable,
+        questionid = SERIALIO_UART_QUESTIONID,
+        prompt     = STRING_TOKEN(STR_SERIALIO_UART_ENABLE),
+        help       = STRING_TOKEN(STR_SERIALIO_UART_HELP),
+        flags      = INTERACTIVE | RESET_REQUIRED,
+        default    = 0x1,
+      endcheckbox;
+
+    endform;
+
+endformset;

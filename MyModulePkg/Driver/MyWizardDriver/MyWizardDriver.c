@@ -159,6 +159,7 @@ MyWizardDriverDriverEntryPoint (
   //
   // Publish sample Fromset and config access 
   //
+  DEBUG((DEBUG_INFO, "Installing gEfiHiiConfigAccessProtocolGuid\n"));
   Status = gBS->InstallMultipleProtocolInterfaces(
     &mDriverHandle[0],
     &gEfiDevicePathProtocolGuid,
@@ -174,6 +175,7 @@ MyWizardDriverDriverEntryPoint (
   //
   // Publish our HII data
   //
+  DEBUG((DEBUG_INFO, "HiiAddPackages\n"));
   HiiHandle[0] = HiiAddPackages(
     &mMyWizardDriverFormSetGuid,
     mDriverHandle[0],
@@ -198,7 +200,9 @@ MyWizardDriverDriverEntryPoint (
   //
   ConfigRequestHdr = HiiConstructConfigHdr(&mMyWizardDriverFormSetGuid, mIfrVariableName, mDriverHandle[0]);
   ASSERT(ConfigRequestHdr != NULL);
+  DEBUG((DEBUG_INFO, "ConfigRequestHdr: %s\n", ConfigRequestHdr));
 
+  DEBUG((DEBUG_INFO, "GetVariable - %s\n", mIfrVariableName));
   BufferSize = sizeof(MYWIZARDDRIVER_CONFIGURATION);
   Status = gRT->GetVariable(
     mIfrVariableName,
@@ -208,8 +212,9 @@ MyWizardDriverDriverEntryPoint (
     Configuration
   );
   if (EFI_ERROR(Status)) {  // Not definded yet so add it to the NV Variables.
-        // zero out buffer
+    // zero out buffer
     ZeroMem(Configuration, sizeof(MYWIZARDDRIVER_CONFIGURATION));
+    DEBUG((DEBUG_INFO, "SetVariable - %s\n", mIfrVariableName));
     Status = gRT->SetVariable(
       mIfrVariableName,
       &mMyWizardDriverFormSetGuid,
@@ -221,6 +226,7 @@ MyWizardDriverDriverEntryPoint (
     // EFI variable for NV config doesn't exist, we should build this variable
     // based on default values stored in IFR
     //
+    DEBUG((DEBUG_INFO, "HiiSetToDefaults - %s\n", ConfigRequestHdr));
     ActionFlag = HiiSetToDefaults(ConfigRequestHdr, EFI_HII_DEFAULT_CLASS_STANDARD);
     ASSERT(ActionFlag);
   }
@@ -228,6 +234,7 @@ MyWizardDriverDriverEntryPoint (
     //
     // EFI variable does exist and Validate Current Setting
     //
+    DEBUG((DEBUG_INFO, "HiiValidateSettings - %s\n", ConfigRequestHdr));
     ActionFlag = HiiValidateSettings(ConfigRequestHdr);
     ASSERT(ActionFlag);
   }
